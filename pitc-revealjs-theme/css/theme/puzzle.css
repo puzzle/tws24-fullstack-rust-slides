@@ -161,7 +161,7 @@ h1, h2, h3, h4 {
 .reveal pre {
   display: block;
   position: relative;
-  width: 90%;
+  width: 100%;
   margin: 2.5rem auto;
   text-align: left;
   font-size: 0.55em;
@@ -564,8 +564,9 @@ h1, h2, h3, h4 {
     color: #1e5a96; }
 
 code {
-  font-size: 0.85rem;
-  line-height: 1.1em; }
+  background: #D3E1E4;
+  font-size: 90%;
+}
 
 .big code {
   font-size: 1rem;

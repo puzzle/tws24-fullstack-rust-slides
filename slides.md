@@ -40,6 +40,63 @@ All variables must be initialized before use.
 
 -*-*-
 
+## Rust Syntax: Scalar Types
+
+* Signed int: `i8`, `i16`, `i32`, `i64`, `i128`, `isize` (ptr size)
+* Unsigned int: `u8`, `u16`, `u32`, `u64`, `u128` and `usize`
+* Floating point: `f32`, `f64`
+* `char`: Unicode scalar like `'a'`, `'α'`, `'∞'` (4 bytes)
+* `bool`: `true` or `false`
+* `()`: Unit type, can only be empty tuple `()`
+
+-*-*-
+
+## Rust Syntax: Compound Types
+
+* Arrays: fixed size, single type, e.g. `[1, 2, 3]`
+* Tuples: fixed size, multiple types, e.g.: `(1, true)`
+
+-*-*-
+
+## Rust Syntax: String Types
+
+* `String`:
+  * A growable, heap-allocated string.
+  * Used when you need to own and modify string data.
+  * Can be converted from and to slices (&str).
+  * Commonly seen in data structures.
+
+* `&str` ("stir", "String Slice"):
+  * A non-owning reference to a sequence of UTF-8 encoded string data.
+  * Used for reading string data without taking ownership.
+  * Commonly seen as function parameters.
+  * String literals have type `&str`
+
+* String: Heap-allocated string, guaranteed UTF-8
+* &str: Slice of a string owned by other, guaranteed UTF-8
+  * String literals have type `&str`
+* Data structures typically own Strings and use `String`
+* Functions typically accept String references `&str`
+
+```text
+  String
+    | addr | ---------> Hello World!
+    | size |                    |
+    | cap  |                    |
+                                |
+    &str                        |
+    | addr | -------------------|
+    | size |
+```
+
+-*-*-
+
+## Rust Syntax: Ownership and Moves
+
+
+-*-*-
+
+
 ## Rust Syntax: Tuples
 
 ```rust
@@ -80,7 +137,7 @@ let (_, right) = slice.split_at(middle);
 ```
 <!-- .element class="very-big" --->
 
-The variable `_` is commonly use to throw away values.
+The variable `_` is commonly used to throw away values.
 
 -*-*-
 
@@ -251,21 +308,118 @@ let Vec2 { x, .. } = v;
 
 ## Rust Syntax: Methods
 
+You can declare methods on your own types:
+
+```rust
+struct Number {
+    odd: bool,
+    value: i32,
+}
+
+impl Number {
+    fn is_strictly_positive(self) -> bool {
+        self.value > 0
+    }
+}
+```
+<!-- .element class="very-big" --->
+
 -*-*-
 
 ## Rust Syntax: Immutability
 
+Variable bindings are immutable by default:
+
+```rust
+let n = Number {
+    odd: true,
+    value: 17,
+};
+
+n.odd = false; // error: cannot assign to `n.odd`,
+               // as `n` is not declared to be mutable
+
+n = Number {
+    odd: false,
+    value: 22,
+}; // error: cannot assign twice to immutable variable `n`
+```
+<!-- .element class="very-big" --->
+
+
 -*-*-
 
-## Rust Syntax: Generics
+## Rust Syntax: Immutability
+
+`mut` makes a variable binding mutable:
+
+```rust
+let mut n = Number {
+    odd: true,
+    value: 17,
+};
+
+n.value = 19; // all good
+```
+<!-- .element class="very-big" --->
 
 -*-*-
 
 ## Rust Syntax: Macros
 
+`name!()`, `name![]` or `name!{}` invoke a macro.
+
+```rust
+fn main() {
+    println!("{}", "Hello there!");
+}
+```
+<!-- .element class="very-big" --->
+
+This expands to something that has the same effect as:
+
+```rust
+fn main() {
+    use std::io::{self, Write};
+    io::stdout().lock().write_all(b"Hello there!\n").unwrap();
+}
+```
+<!-- .element class="very-big" --->
+
 -*-*-
 
 ## Rust Syntax: Enums
+
+Rust enums can just be constants like in other languages:
+
+```rust
+enum Message {
+    Quit,
+    Move,
+    Write,
+    ChangeColor,
+}
+
+let msg = Message::Move;
+```
+
+-*-*-
+
+## Rust Syntax: Enums
+
+But they can also contain data:
+
+```rust
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+let msg = Message::Move { x: 42, y: 0 }; 
+```
+<!-- .element class="very-big" --->
 
 -*-*-
 ## Rust Syntax: Option
@@ -287,6 +441,123 @@ let Vec2 { x, .. } = v;
 
 ## Rust Syntax: Traits
 
+Traits are something multiple types have in common:
+
+```rust
+trait Signed {
+    fn is_strictly_negative(self) -> bool;
+}
+
+impl Signed for Number {
+    fn is_strictly_negative(self) -> bool {
+        self.value < 0
+    }
+}
+
+fn main() {
+    let n = Number { odd: false, value: -44 };
+    println!("{}", n.is_strictly_negative()); // prints "true"
+}
+```
+<!-- .element class="very-big" --->
+
+-*-*-
+
+## Rust Syntax: Traits
+
+Traits can be implemented for foreign types:
+
+```rust
+impl Signed for i32 {
+    fn is_strictly_negative(self) -> bool {
+        self < 0
+    }
+}
+```
+<!-- .element class="very-big" --->
+
+And foreign traits for own types:
+
+```rust
+impl std::ops::Neg for Number {
+    type Output = Number;
+
+    fn neg(self) -> Number {
+        Number {
+            value: -self.value,
+            odd: self.odd,
+        }        
+    }
+}
+```
+<!-- .element class="very-big" --->
+
+-*-*-
+
+## Rust Syntax: Traits
+
+* But foreign traits can't be implemented for foreign types
+* This is part of the orphan rules
+* The orphan rules prevent incoherence, i.e. multiple implementations of a trait for a type
+* Traits are quite different from Java interfaces: https://stackoverflow.com/questions/69477460/is-rust-trait-the-same-as-java-interface
+
+
+* impl Trait return type
+
+-*-*-
+
+## Rust Syntax: Generics
+
+Functions can be generic:
+
+```rust
+fn foobar<L, R>(left: L, right: R) {
+    // do something with `left` and `right`
+}
+```
+<!-- .element class="very-big" --->
+
+Type parameters usually have constraints, so you can actually do something with them.
+
+```rust
+use std::fmt::Debug;
+
+fn compare<T>(left: T, right: T)
+where
+    T: Debug + PartialEq,
+{
+    println!("{:?} {} {:?}", left,
+        if left == right { "==" } else { "!=" }, right);
+}
+```
+<!-- .element class="very-big" --->
+
+-*-*-
+
+## Rust Syntax: Generics
+
+Structs can be generic too:
+
+```rust
+struct Pair<T> {
+    a: T,
+    b: T,
+}
+
+fn print_type_name<T>(_val: &T) {
+    println!("{}", std::any::type_name::<T>());
+}
+
+fn main() {
+    let p1 = Pair { a: 3, b: 9 };
+    let p2 = Pair { a: true, b: false };
+    print_type_name(&p1); // prints "Pair<i32>"
+    print_type_name(&p2); // prints "Pair<bool>"
+}
+```
+<!-- .element class="very-big" --->
+
+
 -*-*-
 
 ## (Rust Syntax: Lifetimes)
@@ -294,6 +565,55 @@ let Vec2 { x, .. } = v;
 -*-*-
 
 https://fasterthanli.me/articles/a-half-hour-to-learn-rust
+
+-*-*-
+
+## Leptos
+
+* Mature Rust Full-stack framework
+* Client code compiled to WebAssembly
+* Supports CSR and SSR applications
+* Server functions can be called on the client
+  * No need for REST or other API
+* Reactive, no virtual DOM
+
+-*-*-
+
+## Leptos
+
+* Based on Web standards
+  * Router based on links and forms
+* JSX-like template format
+* Signals have value semantics
+  * No fights with the borrow checker
+* Performance like fastest JavaScript frameworks
+  * Even though WebAssembly has no direct access to DOM
+
+-*-*-
+
+## Leptos SSR: Life of a Page Load
+
+On server:
+
+1. Web server receives and routes HTTP request
+2. Leptos app renders static HTML
+3. Web server streams HTML to browser 
+
+In browser:
+
+4. Browser starts loading linked JS and WASM
+5. Browser renders static HTML in the meantime
+6. Leptos app hydrates HTML, adding interactivity
+
+Navigation now takes place on the client.
+
+-*-*-
+
+## Why Leptos SSR
+
+* Improved load times
+* Static parts can be read by search engines (SEO)
+* Graceful degradation for clients without JS/WASM
 
 -*-*-
 
@@ -346,3 +666,79 @@ Install Leptos support:
 ```sh
 cargo install cargo-leptos leptosfmt
 ```
+
+-*-*-
+
+## Leptos: Reactive Primitives
+
+* Signals: basic reactive state
+* Effects: run side effects on state changes
+* Derived Signals/Memos: compute state based on signals
+* Contexts: share state accross components
+* Stores: Manage complex state
+
+-*-*-
+
+## Leptos: Basic Component
+
+```rust
+fn main() {
+    leptos::mount_to_body(|| view! { <App/> })
+}
+```
+<!-- .element class="very-big" --->
+
+```rust
+#[component]
+fn App() -> impl IntoView {
+    let (count, set_count) = create_signal(0);
+
+    view! {
+        <button
+            on:click=move |_| {
+                set_count.update(|n| *n += 1);
+            }
+        >
+            "Click me: "
+            {count}
+        </button>
+    }
+}
+```
+<!-- .element class="very-big" --->
+
+-*-*-
+
+## Leptos: Basic Component
+
+* `#[component]` macro turns `App` function into custom HTML tag
+* `App` function runs once only
+* `view!` macro converts RSX into function calls
+* `on:click` runs on every click event
+* `on:click` passes event arg, which is ignored
+* `create_signal` creates r/w signal with initial state
+* `count` signal can also be used as a function
+
+-*-*-
+
+## Leptos: Dynamic Classes & Styles
+
+```rust
+<button
+    on:click=move |_| {
+        set_count.update(|n| *n += 1);
+    }
+    // the class: syntax reactively updates a single class
+    // here, we'll set the `red` class when `count` is odd
+    class:red=move || count() % 2 == 1
+    style:background-color=move || format!("rgb({}, {}, 100)", count(), 100)
+    value=count
+>
+    "Click me"
+</button>
+```
+<!-- .element class="very-big" --->
+
+
+-*-*-
+
