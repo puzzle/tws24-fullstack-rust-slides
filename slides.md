@@ -682,11 +682,63 @@ cargo install cargo-leptos leptosfmt
 
 ## Leptos: Reactive Primitives
 
-* Signals: basic reactive state
-* Effects: run side effects on state changes
-* Derived Signals/Memos: compute state based on signals
-* Contexts: share state accross components
-* Stores: Manage complex state
+-*-*-
+
+### Signals
+
+Basic reactive state
+
+```rust
+let (count, set_count) = create_signal(0);
+
+// Read state
+count(); // nightly
+count.get(); // stable
+
+// Set state
+set_count(1); // nightly
+set_count.set(1); // stable
+
+// Update state
+set_count.update(|n| *n += 1);
+```
+
+-*-*-
+
+### Derived Signals/Memos
+
+Compute state based on signals
+
+```rust
+let (count, set_count) = create_signal(1);
+
+// Derived signal (for most cases)
+let derived_signal_double_count = move || count() * 2;
+
+// Memo (for expensive computations)
+let memoized_double_count = create_memo(move |_| count() * 2);
+```
+
+-*-*-
+
+### Effects
+
+Run side effects on state changes \
+(to synchronize with non-reactive world)
+
+```rust
+let (count, set_count) = create_signal(0);
+
+create_effect(move |_| {
+  log::debug!("Count: {}", count());
+});
+```
+
+-*-*-
+
+### Contexts
+
+Share state accross components (like React Context)
 
 -*-*-
 
@@ -711,7 +763,7 @@ fn App() -> impl IntoView {
             }
         >
             "Click me: "
-            {count}
+            {move || count()}
         </button>
     }
 }
