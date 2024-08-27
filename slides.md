@@ -568,6 +568,17 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 
 -*-*-
 
+# Rust for UI
+
+* A movement using Rust for UI development
+* WebAssembly: Run Rust in the browser
+* Frameworks on the rise: \
+[Leptos](https://leptos.dev/) (Web), [sauron](https://github.com/ivanceras/sauron) (Web), [Dioxus](https://dioxuslabs.com/) (cross-plattform), etc.
+
+→ https://www.thoughtworks.com/radar/languages-and-frameworks/rust-for-ui
+
+-*-*-
+
 ## Leptos
 
 * Mature Rust Full-stack framework
@@ -583,7 +594,7 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 
 * Based on Web standards
   * Router based on links and forms
-* JSX-like template format
+* JSX-like template format: RSX
 * Signals have value semantics
   * No fights with the borrow checker
 * Performance like fastest JavaScript frameworks
