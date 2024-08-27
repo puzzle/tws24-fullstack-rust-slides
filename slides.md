@@ -784,7 +784,7 @@ fn App() -> impl IntoView {
 
 -*-*-
 
-## Leptos: Dynamic Classes & Styles
+### Leptos: Dynamic Classes, Styles & Attributes
 
 ```rust
 <button
@@ -794,7 +794,6 @@ fn App() -> impl IntoView {
     // the class: syntax reactively updates a single class
     // here, we'll set the `red` class when `count` is odd
     class:red=move || count() % 2 == 1
-    style:background-color=move || format!("rgb({}, {}, 100)", count(), 100)
     value=count
 >
     "Click me"
@@ -802,6 +801,24 @@ fn App() -> impl IntoView {
 ```
 <!-- .element class="very-big" --->
 
+* Works similarly with [styles](https://book.leptos.dev/view/02_dynamic_attributes.html#dynamic-styles) and [attributes](https://book.leptos.dev/view/02_dynamic_attributes.html#dynamic-styles) 
 
 -*-*-
+
+### Leptos: Async
+
+* Resource: current state of read async task
+* `<Suspense/>`: Shows children if resources ready, fallback otherwise
+* `<Await/>`: Shows children if future ready, nothing otherwise
+* `<Transition/>`: Shows children if resources ready, previous data or fallback otherwise
+* Action: current status of mutating async task
+note:
+
+ - **Fetching Data on the Server**: Making HTTP requests or database queries during SSR.
+   - **Handling Async Operations**: Using `async/await` in the context of SSR.
+   - **Hydration**: How to pass data from SSR to the client for further processing.
+
+   **Leptos Book Reference**:
+   - [Chapter 5: Fetching Data](https://leptos.dev/book/fetching_data.html)
+   - [Chapter 9: SSR and SSG - Data Fetching](https://leptos.dev/book/ssr.html#data-fetching)
 
