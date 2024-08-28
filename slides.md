@@ -586,7 +586,8 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 * Supports CSR and SSR applications
 * Server functions can be called on the client
   * No need for REST or other API
-* Reactive, no virtual DOM
+* Fine-grained reactive, no virtual DOM
+  * Inspired by Solid (JS) and Sycamore (Rust)
 
 -*-*-
 
@@ -602,7 +603,7 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 
 -*-*-
 
-## Leptos SSR: Life of a Page Load
+## Leptos: Life of an SSR Page Load
 
 <!-- On server:
 
@@ -618,11 +619,11 @@ In browser:
 
 Navigation now takes place on the client. -->
 
-<img src="https://mermaid.ink/svg/pako:eNqNU01PAjEQ_SuTHowmIPeNIfEjBg0kxkW97KW0AzTuTrGdagjhv9v9QHYRI6dtpu-9eW-6sxHKahSJ6Pf7GSlLc7NIMgIojHPWXSu2zicwl7nHjCpQRh4_ApLCOyMXThYlXJZACB4dSA8v8VtWV9KxUWYliWHm7FdzfVMfB1czNxzjiq2H29wg8SEngj5rSgNLq0LpAepm_eFwp5zAq_EmkgxjjYimzKdk3CHK2s5GSazlk6hKGkbT6RO4MpmvfGj8Te-I-sYL7Gy2JZ9tiJC2JpzFE-mI8yxjwng5GbfZnSgpO5TFD6ZlxrdG8F_AUGk9H217bBD3yGoJj-ng7Tqd_BO2Y_cPj90uP-jRWjtZjWcyhnOptaEFGGJ0lYLh9UWHu49y0sOEZhK_f5CHpgec4-XiElRu1DvMArOliwPp4E8d8j6WJJ3jPoil43ZFTxToCml03LtNickEL7HATMSEQuNchpwzkdE2QmVgm65JiYRdwJ4IKx21mtUTSbWZ228vNVSO" alt="Life of a Page Load" style="width: 70%; display: block; margin: auto;" />
+<img src="https://mermaid.ink/svg/pako:eNqllEFP4zAQhf_KyIdVkWi5R6gSC1p1V61ABHYvubj2NLVIxsUegyrEf8dOUkhpYSs4JbK_eX5vMvGTUFajyMRwOCxIWVqYMisIoDbOWXem2DqfwUJWHgtqoII83gckhRdGlk7WCZcJhODRgfRwG59pdSUdG2VWkhjmzj522z_b15PTuRtPccXWw3llMEKDf2f57Oh9aWQf2sqOzpuFZAXaM4fj8eaADP4abzgKlNgS0Zt5kIwbIq1t3KTCVj6LqqRhcnNzBS4F9JxAjbvlW6K-8wIbm33Jaxsi0teEH_GNdOQ8y5gwbs6m_eqtKDk7lPUr0zPjey34NGDSC43Y9d5z93XiF7Jawp_8JH2O_6Td8vuByb12JmvtZNOd2RQGUmtDJRhidE294fXRQR8gdIl3B-F3JwYDHJUjUJVRdzAPzJbeSwd_UDP76hNJusI3x5Y-CHq70knv4nL2zTznTYDK0B2wBcvLCLRj_pUsO4Oh1yTrbjJg8Gh4Ca-_465rcSxqdLU0Ot4eT4kpRHRUYyHiHAiNCxkqLkRBzxGVgW2-JiUydgGPRWh60l0gImvul-cXEi2YcQ" alt="Life of a Page Load" style="width: 70%; display: block; margin: auto;" />
 
 <!--
 Edit:
-https://mermaid.live/edit#pako:eNqNU01PAjEQ_SuTHowmIPeNIfEjBg0kxkW97KW0AzTuTrGdagjhv9v9QHYRI6dtpu-9eW-6sxHKahSJ6Pf7GSlLc7NIMgIojHPWXSu2zicwl7nHjCpQRh4_ApLCOyMXThYlXJZACB4dSA8v8VtWV9KxUWYliWHm7FdzfVMfB1czNxzjiq2H29wg8SEngj5rSgNLq0LpAepm_eFwp5zAq_EmkgxjjYimzKdk3CHK2s5GSazlk6hKGkbT6RO4MpmvfGj8Te-I-sYL7Gy2JZ9tiJC2JpzFE-mI8yxjwng5GbfZnSgpO5TFD6ZlxrdG8F_AUGk9H217bBD3yGoJj-ng7Tqd_BO2Y_cPj90uP-jRWjtZjWcyhnOptaEFGGJ0lYLh9UWHu49y0sOEZhK_f5CHpgec4-XiElRu1DvMArOliwPp4E8d8j6WJJ3jPoil43ZFTxToCml03LtNickEL7HATMSEQuNchpwzkdE2QmVgm65JiYRdwJ4IKx21mtUTSbWZ228vNVSO
+https://mermaid.live/edit#pako:eNqllEFP4zAQhf_KyIdVkWi5R6gSC1p1V61ABHYvubj2NLVIxsUegyrEf8dOUkhpYSs4JbK_eX5vMvGTUFajyMRwOCxIWVqYMisIoDbOWXem2DqfwUJWHgtqoII83gckhRdGlk7WCZcJhODRgfRwG59pdSUdG2VWkhjmzj522z_b15PTuRtPccXWw3llMEKDf2f57Oh9aWQf2sqOzpuFZAXaM4fj8eaADP4abzgKlNgS0Zt5kIwbIq1t3KTCVj6LqqRhcnNzBS4F9JxAjbvlW6K-8wIbm33Jaxsi0teEH_GNdOQ8y5gwbs6m_eqtKDk7lPUr0zPjey34NGDSC43Y9d5z93XiF7Jawp_8JH2O_6Td8vuByb12JmvtZNOd2RQGUmtDJRhidE294fXRQR8gdIl3B-F3JwYDHJUjUJVRdzAPzJbeSwd_UDP76hNJusI3x5Y-CHq70knv4nL2zTznTYDK0B2wBcvLCLRj_pUsO4Oh1yTrbjJg8Gh4Ca-_465rcSxqdLU0Ot4eT4kpRHRUYyHiHAiNCxkqLkRBzxGVgW2-JiUydgGPRWh60l0gImvul-cXEi2YcQ
 -->
 
 -*-*-
@@ -726,6 +727,8 @@ let derived_signal_double_count = move || count() * 2;
 let memoized_double_count = create_memo(move |_| count() * 2);
 ```
 
+→ https://docs.rs/leptos/latest/leptos/fn.create_memo.html
+
 -*-*-
 
 ### Effects
@@ -749,7 +752,7 @@ Share state accross components (like React Context)
 
 -*-*-
 
-## Leptos: Basic Component
+## Leptos: Basic Component (1)
 
 ```rust
 fn main() {
@@ -781,15 +784,22 @@ fn App() -> impl IntoView {
 
 -*-*-
 
-## Leptos: Basic Component
+## Leptos: Basic Component (2)
 
-* `#[component]` macro turns `App` function into custom HTML tag
-* `App` function runs once only
+What happens?
+
+* `#[component]` macro annotates `App` function to be used in templates as `<App />`
 * `view!` macro converts RSX into function calls
-* `on:click` runs on every click event
-* `on:click` passes event arg, which is ignored
+* `App` function is executed once only ⚠️
+
+-*-*-
+
+## Leptos: Basic Component (3)
+
 * `create_signal` creates r/w signal with initial state
-* `count` signal can also be used as a function
+* `on:click` runs on every `click` event
+  * passes event as arg to closure (is ignored)
+* `count` reads signal value (reactive)
 
 -*-*-
 
@@ -876,6 +886,120 @@ pub fn List() -> impl IntoView {
 
 - Key must be unique
 - Reuses existing items
+
+-*-*-
+
+## Leptos: Control Flow
+
+```rust
+// if statement
+{move ||
+    if count() > 5 {
+        view! { <p>Yeah!</p> }
+    } else {
+        view! { <p>Nope!</p> }
+    }
+}
+
+// bool::then()
+{move || (count() > 5).then(|| view! { <p>Yeah!</p> })}
+
+// Pattern matching
+{move ||
+    match count() {
+        5 => view! { <p>Yeah!</p> },
+        n if n % 2 != 0 => view! { <p>Huh?</p> },
+        _ => view! { <p>Nope!</p> }
+    }
+}
+```
+
+-*-*-
+
+## Leptos: Children
+
+"Unnamed slots"
+
+```rust
+#[component]
+pub fn Header(
+    children: Children,
+) -> impl IntoView
+{
+    view! {
+        <h2>"Header"</h2>
+        {children()}
+    }
+}
+```
+
+```rust
+<Header>
+  <p>Some content</p>
+</Header>
+```
+
+-*-*-
+
+## Leptos: Render Props
+
+"Named slots"
+
+```rust
+#[component]
+pub fn Header<F, IV>(
+    actions: F,
+) -> impl IntoView
+where
+    F: Fn() -> IV,
+    IV: IntoView,
+{
+    view! {
+        <h2>"Render Prop"</h2>
+        {actions()}
+    }
+}
+```
+
+```rust
+<TakesChildren actions=|| view! { <p>Some actions</p> } />
+```
+
+-*-*-
+
+## Leptos: Managing State
+
+- Use signals for component-local state
+- Pass values to children (prop drilling)
+- Pass signals to children
+- Pass signals through context
+- Create lenses into state struct with `create_slice`
+- State in URL
+
+-*-*-
+
+## Leptos: Handling Data in SSR
+
+TODO: hupf
+
+Passing data from the server to components during rendering.
+
+-*-*-
+
+## Leptos: Routing
+
+TODO: hupf
+
+- SSR Routing Basics: Setting up and using routing in an SSR context.
+- Dynamic Routing with SSR: Handling dynamic routes and passing data during server-side rendering.
+
+-*-*-
+
+## Leptos: Styling Components
+
+TODO: hupf
+
+- Styling approaches (CSR & SSR)
 
 -*-*-
 
