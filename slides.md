@@ -914,6 +914,20 @@ pub fn List() -> impl IntoView {
 }
 ```
 
+note:
+
+Variante optional else:
+
+```
+{move ||
+    if count() > 5 {
+        Some( view! {<p>Yeah!</p>})
+    } else {
+        None
+    }
+}
+```
+
 -*-*-
 
 ## Leptos: Children
@@ -982,16 +996,35 @@ where
 
 TODO: skip this topic?
 
-## Leptos: Data Fetching and Working with Async
+-*-*-
 
-TODO: dani
+### Leptos: Async Primitives
+
+* Resource: \
+  Reactive (signal-based) async task (data fetching)
+* Action: \
+  imperative async task (data mutation)
+
+-*-*-
+
+### Leptos: Async Streaming Modes
+
+* `<Suspense/>`: \
+  Shows children if resource ready, fallback otherwise
+* `<Await/>`: \
+  Shows children if future ready, nothing otherwise
+* `<Transition/>`: \
+  Shows children if resource ready, previous data or fallback otherwise
+
+-*-*-
+
+### Leptos: Server Functions & Hydration
+
+TODO: dani?
 
 - Fetching Data on the Server: Making HTTP requests or database queries during SSR.
+- Server Functions
 - Hydration: How to pass data from SSR to the client for further processing.
-- Dealing with `Future`s
-- Server functions
-- Resources & actions
-- Suspense & streaming modes
 
 -*-*-
 
@@ -1011,21 +1044,3 @@ TODO: hupf
 - Styling approaches (CSR & SSR)
 
 -*-*-
-
-### Leptos: Async
-
-* Resource: current state of read async task
-* `<Suspense/>`: Shows children if resources ready, fallback otherwise
-* `<Await/>`: Shows children if future ready, nothing otherwise
-* `<Transition/>`: Shows children if resources ready, previous data or fallback otherwise
-* Action: current status of mutating async task
-note:
-
- - **Fetching Data on the Server**: Making HTTP requests or database queries during SSR.
-   - **Handling Async Operations**: Using `async/await` in the context of SSR.
-   - **Hydration**: How to pass data from SSR to the client for further processing.
-
-   **Leptos Book Reference**:
-   - [Chapter 5: Fetching Data](https://leptos.dev/book/fetching_data.html)
-   - [Chapter 9: SSR and SSG - Data Fetching](https://leptos.dev/book/ssr.html#data-fetching)
-
