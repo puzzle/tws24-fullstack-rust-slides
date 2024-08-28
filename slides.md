@@ -1028,12 +1028,27 @@ TODO: dani?
 
 -*-*-
 
-## Leptos: Routing
+## Leptos: Routing (1)
 
-TODO: hupf
+- Separate `leptos_router` package
+- Supports CSR, SSR & Hydration
+- Define routes in main component with `<Router>`
+- Create links with `<A>`
 
-- SSR Routing Basics: Setting up and using routing in an SSR context.
-- Dynamic Routing with SSR: Handling dynamic routes and passing data during server-side rendering.
+note:
+
+Similar to React Router
+
+-*-*-
+
+## Leptos: Routing (2)
+
+- Access route params (`/users/:id`): \
+  `use_params`
+- Access query params (`/search?q=Foo`): \
+  `use_queries`
+
+https://book.leptos.dev/router/16_routes.html
 
 -*-*-
 
