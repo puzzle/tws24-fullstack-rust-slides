@@ -793,16 +793,21 @@ fn App() -> impl IntoView {
 
 -*-*-
 
-### Leptos: Dynamic Classes, Styles & Attributes
+## Leptos: Dynamic Attributes
 
 ```rust
 <button
     on:click=move |_| {
         set_count.update(|n| *n += 1);
     }
-    // the class: syntax reactively updates a single class
-    // here, we'll set the `red` class when `count` is odd
+
+    // Dynamic class
     class:red=move || count() % 2 == 1
+
+    // Dynamic style
+    style:background-color=move || format!("rgb({}, {}, 100)", count(), 100)
+
+    // Dynamic attribute
     value=count
 >
     "Click me"
@@ -810,7 +815,67 @@ fn App() -> impl IntoView {
 ```
 <!-- .element class="very-big" --->
 
-* Works similarly with [styles](https://book.leptos.dev/view/02_dynamic_attributes.html#dynamic-styles) and [attributes](https://book.leptos.dev/view/02_dynamic_attributes.html#dynamic-styles) 
+-*-*-
+
+## Leptos: Component Props
+
+- Reactive & static
+- Optional, with default value
+- Generic
+- ...
+
+```rust
+#[component]
+pub fn Hello(name: String) -> impl IntoView {
+    view! { <p>Hi {name}!</p> }
+}
+```
+
+-*-*-
+
+## Leptos: Static Iteration
+
+```rust
+#[component]
+pub fn List() -> impl IntoView {
+    let (values, set_values) = create_signal(vec![0, 1, 2]);
+    view! {
+      <ul>
+        {move || 
+          values().into_iter()
+            .map(|value| view! { <li>{value}</li> })
+            .collect_view()
+        }
+      </ul>
+    }
+}
+```
+
+- Inefficient: re-renders every element in the list
+- Use for static lists
+
+-*-*-
+
+## Leptos: Dynamic Iteration
+
+```rust
+#[component]
+pub fn List() -> impl IntoView {
+    let (values, set_values) = create_signal(vec![0, 1, 2]);
+    view! {
+      <ul>
+        <For
+          each=values
+          key=|v| *v
+          children=|value| view! { <li>{value}</li> }
+        />
+      </ul>
+    }
+}
+```
+
+- Key must be unique
+- Reuses existing items
 
 -*-*-
 
