@@ -978,11 +978,20 @@ where
 
 -*-*-
 
-## Leptos: Handling Data in SSR
+## Leptos: Form Handling
 
-TODO: hupf
+TODO: skip this topic?
 
-Passing data from the server to components during rendering.
+## Leptos: Data Fetching and Working with Async
+
+TODO: dani
+
+- Fetching Data on the Server: Making HTTP requests or database queries during SSR.
+- Hydration: How to pass data from SSR to the client for further processing.
+- Dealing with `Future`s
+- Server functions
+- Resources & actions
+- Suspense & streaming modes
 
 -*-*-
 
