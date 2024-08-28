@@ -604,11 +604,11 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 
 ## Leptos SSR: Life of a Page Load
 
-On server:
+<!-- On server:
 
 1. Web server receives and routes HTTP request
 2. Leptos app renders static HTML
-3. Web server streams HTML to browser 
+3. Web server streams HTML to browser
 
 In browser:
 
@@ -616,13 +616,20 @@ In browser:
 5. Browser renders static HTML in the meantime
 6. Leptos app hydrates HTML, adding interactivity
 
-Navigation now takes place on the client.
+Navigation now takes place on the client. -->
+
+<img src="https://mermaid.ink/svg/pako:eNqNU01PAjEQ_SuTHowmIPeNIfEjBg0kxkW97KW0AzTuTrGdagjhv9v9QHYRI6dtpu-9eW-6sxHKahSJ6Pf7GSlLc7NIMgIojHPWXSu2zicwl7nHjCpQRh4_ApLCOyMXThYlXJZACB4dSA8v8VtWV9KxUWYliWHm7FdzfVMfB1czNxzjiq2H29wg8SEngj5rSgNLq0LpAepm_eFwp5zAq_EmkgxjjYimzKdk3CHK2s5GSazlk6hKGkbT6RO4MpmvfGj8Te-I-sYL7Gy2JZ9tiJC2JpzFE-mI8yxjwng5GbfZnSgpO5TFD6ZlxrdG8F_AUGk9H217bBD3yGoJj-ng7Tqd_BO2Y_cPj90uP-jRWjtZjWcyhnOptaEFGGJ0lYLh9UWHu49y0sOEZhK_f5CHpgec4-XiElRu1DvMArOliwPp4E8d8j6WJJ3jPoil43ZFTxToCml03LtNickEL7HATMSEQuNchpwzkdE2QmVgm65JiYRdwJ4IKx21mtUTSbWZ228vNVSO" alt="Life of a Page Load" style="width: 70%; display: block; margin: auto;" />
+
+<!--
+Edit:
+https://mermaid.live/edit#pako:eNqNU01PAjEQ_SuTHowmIPeNIfEjBg0kxkW97KW0AzTuTrGdagjhv9v9QHYRI6dtpu-9eW-6sxHKahSJ6Pf7GSlLc7NIMgIojHPWXSu2zicwl7nHjCpQRh4_ApLCOyMXThYlXJZACB4dSA8v8VtWV9KxUWYliWHm7FdzfVMfB1czNxzjiq2H29wg8SEngj5rSgNLq0LpAepm_eFwp5zAq_EmkgxjjYimzKdk3CHK2s5GSazlk6hKGkbT6RO4MpmvfGj8Te-I-sYL7Gy2JZ9tiJC2JpzFE-mI8yxjwng5GbfZnSgpO5TFD6ZlxrdG8F_AUGk9H217bBD3yGoJj-ng7Tqd_BO2Y_cPj90uP-jRWjtZjWcyhnOptaEFGGJ0lYLh9UWHu49y0sOEZhK_f5CHpgec4-XiElRu1DvMArOliwPp4E8d8j6WJJ3jPoil43ZFTxToCml03LtNickEL7HATMSEQuNchpwzkdE2QmVgm65JiYRdwJ4IKx21mtUTSbWZ228vNVSO
+-->
 
 -*-*-
 
 ## Why Leptos SSR
 
-* Improved load times
+* Improved load times (First Contentful Paint)
 * Static parts can be read by search engines (SEO)
 * Graceful degradation for clients without JS/WASM
 
@@ -692,11 +699,11 @@ Basic reactive state
 let (count, set_count) = create_signal(0);
 
 // Read state
-count(); // nightly
+count(); // only nightly
 count.get(); // stable
 
 // Set state
-set_count(1); // nightly
+set_count(1); // only nightly
 set_count.set(1); // stable
 
 // Update state
@@ -764,6 +771,8 @@ fn App() -> impl IntoView {
         >
             "Click me: "
             {move || count()}
+            // Or simply: {count}
+            // But not: {count()}
         </button>
     }
 }
