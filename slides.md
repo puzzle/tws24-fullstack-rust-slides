@@ -1091,3 +1091,11 @@ Advantages:
 https://book.leptos.dev/islands.html
 
 -*-*-
+
+# Resources
+
+- [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
+- [Leptos book](https://book.leptos.dev/)
+- [Leptos API documentation](https://docs.rs/leptos/)
+- [Slides repository](https://github.com/puzzle/tws24-fullstack-rust-slides)
+- [Examples repository](https://github.com/puzzle/tws24-fullstack-rust-examples)
