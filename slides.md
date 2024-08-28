@@ -1039,8 +1039,40 @@ TODO: hupf
 
 ## Leptos: Styling Components
 
-TODO: hupf
+- Built-in `<Stylesheet>`
+- Tailwind (already integrated in cargo-leptos)
+- Stylers: Compile-time CSS Extraction
+- Stylance: Scoped CSS Written in CSS Files
+- Styled: Runtime CSS Scoping
 
-- Styling approaches (CSR & SSR)
+https://book.leptos.dev/interlude_styling.html
+
+note:
+
+- `<Stylesheet>`: creates `<link>` tag, preprocessed with cargo-leptos
+- Stylers: unscoped, inline or in separate file
+- Stylance: in separate file
+- Styled: inline
+
+-*-*-
+
+## Leptos: Islands Architecture (1)
+
+- Use `#[island]` for "client components" \
+  (included in WASM binary)
+- Use `#[component]` for "server components" \
+  (only run on the server)
+- Pass props, children, context between islands
+
+-*-*-
+
+## Leptos: Islands Architecture (2)
+
+Advantages:
+
+- Reduce WASM binary size & serialization costs
+- Easier use of server-only APIs in server components.
+
+https://book.leptos.dev/islands.html
 
 -*-*-
