@@ -599,7 +599,7 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 * A movement using Rust for UI development
 * WebAssembly: Run Rust in the browser
 * Frameworks on the rise: \
-[Leptos](https://leptos.dev/) (Web), [sauron](https://github.com/ivanceras/sauron) (Web), [Dioxus](https://dioxuslabs.com/) (cross-plattform), etc.
+[Leptos](https://leptos.dev/) (Web), [sauron](https://github.com/ivanceras/sauron) (Web), [Dioxus](https://dioxuslabs.com/) (cross-plattform), and many more...
 
 → https://www.thoughtworks.com/radar/languages-and-frameworks/rust-for-ui
 
@@ -608,12 +608,12 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 ## Leptos
 
 * Mature Rust Full-stack framework
-* Client code compiled to WebAssembly
 * Supports CSR and SSR applications
-* Server functions can be called on the client
-  * No need for REST or other API
-* Fine-grained reactive, no virtual DOM
-  * Inspired by Solid (JS) and Sycamore (Rust)
+* Client code compiled to WebAssembly
+* Server functions can be called on the client \
+  → No need for REST or other API
+* Fine-grained reactive, no virtual DOM \
+  → Inspired by Solid (JS) and Sycamore (Rust)
 
 ***
 
