@@ -599,15 +599,15 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 * A movement using Rust for UI development
 * WebAssembly: Run Rust in the browser
 * Frameworks on the rise: \
-[Leptos](https://leptos.dev/) (Web), [sauron](https://github.com/ivanceras/sauron) (Web), [Dioxus](https://dioxuslabs.com/) (cross-plattform), and many more...
+[Leptos](https://leptos.dev/) (Web), [sauron](https://github.com/ivanceras/sauron) (Web), [Dioxus](https://dioxuslabs.com/) (cross-plattform) and many more...
 
 → https://www.thoughtworks.com/radar/languages-and-frameworks/rust-for-ui
 
 ***
 
-## Leptos
+## Leptos (1)
 
-* Mature Rust Full-stack framework
+* Mature Rust fullstack framework
 * Supports CSR and SSR applications
 * Client code compiled to WebAssembly
 * Server functions can be called on the client \
@@ -617,14 +617,14 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 
 ***
 
-## Leptos
+## Leptos (2)
 
 * Based on Web standards
   * Router based on links and forms
 * JSX-like template format: RSX
 * Signals have value semantics
   * No fights with the borrow checker
-* Performance like fastest JavaScript frameworks
+* [Performance](https://www.youtube.com/watch?v=4KtotxNAwME) like fastest JavaScript frameworks
   * Even though WebAssembly has no direct access to DOM
 
 ***
@@ -645,11 +645,11 @@ In browser:
 
 Navigation now takes place on the client. -->
 
-<img src="https://mermaid.ink/svg/pako:eNqllEFP4zAQhf_KyIdVkWi5R6gSC1p1V61ABHYvubj2NLVIxsUegyrEf8dOUkhpYSs4JbK_eX5vMvGTUFajyMRwOCxIWVqYMisIoDbOWXem2DqfwUJWHgtqoII83gckhRdGlk7WCZcJhODRgfRwG59pdSUdG2VWkhjmzj522z_b15PTuRtPccXWw3llMEKDf2f57Oh9aWQf2sqOzpuFZAXaM4fj8eaADP4abzgKlNgS0Zt5kIwbIq1t3KTCVj6LqqRhcnNzBS4F9JxAjbvlW6K-8wIbm33Jaxsi0teEH_GNdOQ8y5gwbs6m_eqtKDk7lPUr0zPjey34NGDSC43Y9d5z93XiF7Jawp_8JH2O_6Td8vuByb12JmvtZNOd2RQGUmtDJRhidE294fXRQR8gdIl3B-F3JwYDHJUjUJVRdzAPzJbeSwd_UDP76hNJusI3x5Y-CHq70knv4nL2zTznTYDK0B2wBcvLCLRj_pUsO4Oh1yTrbjJg8Gh4Ca-_465rcSxqdLU0Ot4eT4kpRHRUYyHiHAiNCxkqLkRBzxGVgW2-JiUydgGPRWh60l0gImvul-cXEi2YcQ" alt="Life of a Page Load" style="width: 70%; display: block; margin: auto;" />
+<img src="https://mermaid.ink/svg/pako:eNqllE9P4zAQxb_KyIdVK1G4R6tKbBEqK6pFpOweCAc3nqYWybhrj0EV4ruvnT-Qku2C2FMi-zfP700mfhK5USgSMZlMMsoNrXWRZARQaWuNPc3ZWJfAWpYOM6qhjBz-9kg5nmlZWFlFXEYQvEML0sFNeMbVrbSsc72VxLCy5rHd_ta8nnxd2eklbtk4mJUaAzT6dZouxm9LA_vQVLZ0Wi9EK9CcOZlOuwMS-Kmd5iBQYEMEb_pBMnZEXOvcxMJGPgmqpGC-XF6BjQEdR1DhsHxP1LVeoLPZl7w2PiB9TfgS3kgFzrEMCcPm4rJfvRclZYuyemF6ZlyvBf8MGPV8LXY9OBduz2dXd4f6cY6cb-B7ehI_yjuZ91wfsPpXU_OdsrLuUbAzkkppKkATo63rNe_GcLtcXtx96GP4Nv1wKC5aSRjhcXEMeanze1h5ZkPjN9LefaixffW5JFXiq29DB-LebFXUO_ux-M88szpAqeke2IDhTQCakf9MlsGQqB3JqpuS0aPmDbz8mkPX4khUaCupVbhJniKTieCowkyEaRAK19KXnImMngMqPZt0R7lI2Ho8Er7uSXuZiKS-a57_AKcXm-s" alt="Life of a Page Load" style="width: 70%; display: block; margin: auto;" />
 
 <!--
 Edit:
-https://mermaid.live/edit#pako:eNqllEFP4zAQhf_KyIdVkWi5R6gSC1p1V61ABHYvubj2NLVIxsUegyrEf8dOUkhpYSs4JbK_eX5vMvGTUFajyMRwOCxIWVqYMisIoDbOWXem2DqfwUJWHgtqoII83gckhRdGlk7WCZcJhODRgfRwG59pdSUdG2VWkhjmzj522z_b15PTuRtPccXWw3llMEKDf2f57Oh9aWQf2sqOzpuFZAXaM4fj8eaADP4abzgKlNgS0Zt5kIwbIq1t3KTCVj6LqqRhcnNzBS4F9JxAjbvlW6K-8wIbm33Jaxsi0teEH_GNdOQ8y5gwbs6m_eqtKDk7lPUr0zPjey34NGDSC43Y9d5z93XiF7Jawp_8JH2O_6Td8vuByb12JmvtZNOd2RQGUmtDJRhidE294fXRQR8gdIl3B-F3JwYDHJUjUJVRdzAPzJbeSwd_UDP76hNJusI3x5Y-CHq70knv4nL2zTznTYDK0B2wBcvLCLRj_pUsO4Oh1yTrbjJg8Gh4Ca-_465rcSxqdLU0Ot4eT4kpRHRUYyHiHAiNCxkqLkRBzxGVgW2-JiUydgGPRWh60l0gImvul-cXEi2YcQ
+https://mermaid.live/edit#pako:eNqllE9P4zAQxb_KyIdVK1G4R6tKbBEqK6pFpOweCAc3nqYWybhrj0EV4ruvnT-Qku2C2FMi-zfP700mfhK5USgSMZlMMsoNrXWRZARQaWuNPc3ZWJfAWpYOM6qhjBz-9kg5nmlZWFlFXEYQvEML0sFNeMbVrbSsc72VxLCy5rHd_ta8nnxd2eklbtk4mJUaAzT6dZouxm9LA_vQVLZ0Wi9EK9CcOZlOuwMS-Kmd5iBQYEMEb_pBMnZEXOvcxMJGPgmqpGC-XF6BjQEdR1DhsHxP1LVeoLPZl7w2PiB9TfgS3kgFzrEMCcPm4rJfvRclZYuyemF6ZlyvBf8MGPV8LXY9OBduz2dXd4f6cY6cb-B7ehI_yjuZ91wfsPpXU_OdsrLuUbAzkkppKkATo63rNe_GcLtcXtx96GP4Nv1wKC5aSRjhcXEMeanze1h5ZkPjN9LefaixffW5JFXiq29DB-LebFXUO_ux-M88szpAqeke2IDhTQCakf9MlsGQqB3JqpuS0aPmDbz8mkPX4khUaCupVbhJniKTieCowkyEaRAK19KXnImMngMqPZt0R7lI2Ho8Er7uSXuZiKS-a57_AKcXm-s
 -->
 
 ***
@@ -781,13 +781,11 @@ Share state accross components (like React Context)
 ## Leptos: Basic Component (1)
 
 ```rust
+// main.rs
 fn main() {
     leptos::mount_to_body(|| view! { <App/> })
 }
-```
-<!-- .element class="very-big" --->
 
-```rust
 #[component]
 fn App() -> impl IntoView {
     let (count, set_count) = create_signal(0);
@@ -801,7 +799,7 @@ fn App() -> impl IntoView {
             "Click me: "
             {move || count()}
             // Or simply: {count}
-            // But not: {count()}
+            // But not: {count()} ⚠️
         </button>
     }
 }
@@ -863,7 +861,7 @@ What happens?
 ```rust
 #[component]
 pub fn Hello(name: String) -> impl IntoView {
-    view! { <p>Hi {name}!</p> }
+    view! { <p>"Hi " {name} "!"</p> }
 }
 ```
 
@@ -975,7 +973,7 @@ pub fn Header(
 
 ```rust
 <Header>
-  <p>Some content</p>
+  <p>"Some content"</p>
 </Header>
 ```
 
@@ -1002,7 +1000,7 @@ where
 ```
 
 ```rust
-<TakesChildren actions=|| view! { <p>Some actions</p> } />
+<TakesChildren actions=|| view! { <p>"Some actions"</p> } />
 ```
 
 ***
@@ -1015,12 +1013,6 @@ where
 - Pass signals through context
 - Create lenses into state struct with `create_slice`
 - State in URL
-
-***
-
-## Leptos: Form Handling
-
-TODO: skip this topic?
 
 ***
 
@@ -1058,7 +1050,7 @@ TODO: dani?
 
 - Separate `leptos_router` package
 - Supports CSR, SSR & Hydration
-- Define routes in main component with `<Router>`
+- Define routes in component view with `<Router>` and `<Route path="/about" view=About />`
 - Create links with `<A>`
 
 note:
@@ -1075,6 +1067,23 @@ Similar to React Router
   `use_queries`
 
 https://book.leptos.dev/router/16_routes.html
+
+***
+
+## Leptos: Form Handling
+
+- Controlled & uncontrolled inputs
+- Progressively enhanced components from `leptos_router`:
+  - `<Form/>`: `action` is an URL
+  - `<ActionForm/>`: `action` is an `Action`
+  - `<MultiActionForm/>`: `action` is a `MultiAction`
+
+note:
+
+- Controlled/uncontrolled → analog React
+- Controlled = Input-State wird mit lokalem Signal getracked und `value` aktualisiert
+- Uncontrolled = Browser tracked Input-State
+- Form components sind integriert mit Client-side Routing, funktionieren aber auch ohne JS
 
 ***
 
