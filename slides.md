@@ -611,21 +611,21 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 * Supports CSR and SSR applications
 * Client code compiled to WebAssembly
 * Server functions can be called on the client \
-  → No need for REST or other API
+  <small>→ No need for REST or other API</small>
 * Fine-grained reactive, no virtual DOM \
-  → Inspired by Solid (JS) and Sycamore (Rust)
+  <small>→ Inspired by Solid (JS) and Sycamore (Rust)</small>
 
 ***
 
 ## Leptos (2)
 
-* Based on Web standards
-  * Router based on links and forms
+* Based on Web standards \
+  <small>→ Router based on links and forms</small>
 * JSX-like template format: RSX
-* Signals have value semantics
-  * No fights with the borrow checker
-* [Performance](https://www.youtube.com/watch?v=4KtotxNAwME) like fastest JavaScript frameworks
-  * Even though WebAssembly has no direct access to DOM
+* Signals have value semantics \
+  <small>→ No fights with the borrow checker</small>
+* [Performance](https://www.youtube.com/watch?v=4KtotxNAwME) like fastest JavaScript frameworks \
+  <small>→ Even though WebAssembly has no direct access to DOM</small>
 
 ***
 
@@ -839,6 +839,16 @@ fn App() -> impl IntoView {
 ```
 <!-- .element class="very-big" --->
 
+note:
+
+* `#[component]` macro annotates `App` function to be used in templates as `<App />`
+* `view!` macro converts RSX into function calls
+* `App` function is executed once only ⚠️
+* `create_signal` creates r/w signal with initial state
+* `on:click` runs on every `click` event
+  * passes event as arg to closure (is ignored)
+* `count` reads signal value (reactive)
+
 ***
 
 ## Leptos: Basic Component (2)
@@ -887,9 +897,8 @@ What happens?
 ## Leptos: Component Props
 
 - Reactive & static
-- Optional, with default value
+- Optional; with default value
 - Generic
-- ...
 
 ```rust
 #[component]
@@ -897,6 +906,14 @@ pub fn Hello(name: String) -> impl IntoView {
     view! { <p>"Hi " {name} "!"</p> }
 }
 ```
+
+note:
+
+- Reactive: `ReadSignal<i32>`
+- Static: `i32`
+- `MaybeSignal<i32>` für Props welche static oder reactive sein können
+- Generic: man kann auch Generics verwenden
+
 
 ***
 
@@ -920,6 +937,10 @@ pub fn List() -> impl IntoView {
 
 - Inefficient: re-renders every element in the list
 - Use for static lists
+
+note:
+
+- `.collect_view()`: Collects an iterator or collection into a `View`
 
 ***
 
@@ -952,21 +973,21 @@ pub fn List() -> impl IntoView {
 // if statement
 {move ||
     if count() > 5 {
-        view! { <p>Yeah!</p> }
+        view! { <p>"Yeah!"</p> }
     } else {
-        view! { <p>Nope!</p> }
+        view! { <p>"Nope!"</p> }
     }
 }
 
 // bool::then()
-{move || (count() > 5).then(|| view! { <p>Yeah!</p> })}
+{move || (count() > 5).then(|| view! { <p>"Yeah!"</p> })}
 
 // Pattern matching
 {move ||
     match count() {
-        5 => view! { <p>Yeah!</p> },
-        n if n % 2 != 0 => view! { <p>Huh?</p> },
-        _ => view! { <p>Nope!</p> }
+        5 => view! { <p>"Yeah!"</p> },
+        n if n % 2 != 0 => view! { <p>"Odd!"</p> },
+        _ => view! { <p>"Nope!"</p> }
     }
 }
 ```
@@ -978,7 +999,7 @@ Variante optional else:
 ```
 {move ||
     if count() > 5 {
-        Some( view! {<p>Yeah!</p>})
+        Some( view! {<p>"Yeah!"</p>})
     } else {
         None
     }
@@ -1141,7 +1162,7 @@ note:
 
 ## Leptos: Islands Architecture (1)
 
-- Experimental
+- Experimental ⚠️
 - Use `#[island]` for "client components" \
   (included in WASM binary)
 - Use `#[component]` for "server components" \
