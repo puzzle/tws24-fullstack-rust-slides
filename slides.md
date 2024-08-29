@@ -1126,6 +1126,16 @@ Advantages:
 
 https://book.leptos.dev/islands.html
 
+***
+
+## Further Topics
+
+- Error handling with `<ErrorBoundary>`
+- Testing
+- Client-side form validation
+- Deployment
+- ...
+
 -*-*-
 
 <div class="nr"></div>
