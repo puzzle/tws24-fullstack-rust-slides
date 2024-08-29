@@ -594,7 +594,7 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 
 ***
 
-# Rust for UI
+## Rust for UI
 
 * A movement using Rust for UI development
 * WebAssembly: Run Rust in the browser
@@ -1099,6 +1099,7 @@ note:
 
 ## Leptos: Islands Architecture (1)
 
+- Experimental
 - Use `#[island]` for "client components" \
   (included in WASM binary)
 - Use `#[component]` for "server components" \
@@ -1132,13 +1133,19 @@ https://book.leptos.dev/islands.html
 - [Leptos book](https://book.leptos.dev/)
 - [Leptos API documentation](https://docs.rs/leptos/)
 - [Official Leptos examples](https://github.com/leptos-rs/leptos/tree/main/examples)
+- [Awesome Leptos collection](https://github.com/leptos-rs/awesome-leptos)
 - Workshop: [Slides](https://github.com/puzzle/tws24-fullstack-rust-slides), [examples](https://github.com/puzzle/tws24-fullstack-rust-examples)
 
 ***
 
 ## Hands-On Ideas
 
-TODO: list some ideas
+- Play with interactive examples in [Leptos book](https://book.leptos.dev/)
+- Study [SSR Todo example](https://github.com/puzzle/tws24-fullstack-rust-examples/blob/main/todo_app_sqlite_axum/)
+    - Implement edit
+    - Implement done state
+- Study [official examples](https://github.com/leptos-rs/leptos/tree/main/examples)
+- ...
 
 ***
 
