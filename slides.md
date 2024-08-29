@@ -1,24 +1,42 @@
 <!-- .slide: class="master-cover" -->
 
-## Tech Workshop 24<br>Rust Fullstack Development
+## Rust Fullstack Development
 
 <br/>
 
-### 5.9.2024
+### Tech Workshop<br>5.9.2024
+### Dani Tschan<br>Mathis Hofer
 <!-- .element style="margin-bottom: 12rem" --->
 
-note:
-## Agenda
-
-* Kurzeinführung/Refresher in Rust, abgestimmt auf das eingesetzte Web Framework und Beispielprojekt
-* Tipps um nicht vom Borrow Checker aufgehalten zu werden
-* Einführung in das Web Framework
-* Einführung in Beispielprojekt
-* Selbständiges Studieren und Erweitern des Beispielprojektes
 
 -*-*-
 
-# Rust
+# Agenda
+
+- Introduction to Rust
+- Introduction to the Leptos Web Framework
+- Hands-On
+
+note:
+* Kurzeinführung/Refresher in Rust, abgestimmt auf das eingesetzte Web Framework und Beispielprojekt
+* Tipps um nicht vom Borrow Checker aufgehalten zu werden
+* Einführung in das Leptos Web Framework
+* Einführung in Beispielprojekt
+* Selbständiges Studieren und Erweitern des Beispielprojektes
+
+<!-- .slide: class="master-agenda" -->
+
+-*-*-
+
+<div class="nr"></div>
+
+# Rust Introduction
+
+<!-- .slide: class="master-title" -->
+
+***
+
+## What is Rust?
 
 * Multi-paradigm, influenced by functional and OO programming
 * Memory-safe without garbage collector
@@ -26,7 +44,7 @@ note:
   * From embedded programming to web and desktop apps
 * No undefined behaviour unlike C/C++
 
--*-*-
+***
 
 ## Rust Syntax: Variable Binding
 
@@ -38,7 +56,7 @@ let _x = 42  // _ = don't warn if not used
 
 All variables must be initialized before use.
 
--*-*-
+***
 
 ## Rust Syntax: Scalar Types
 
@@ -49,14 +67,14 @@ All variables must be initialized before use.
 * `bool`: `true` or `false`
 * `()`: Unit type, can only be empty tuple `()`
 
--*-*-
+***
 
 ## Rust Syntax: Compound Types
 
 * Arrays: fixed size, single type, e.g. `[1, 2, 3]`
 * Tuples: fixed size, multiple types, e.g.: `(1, true)`
 
--*-*-
+***
 
 ## Rust Syntax: String Types
 
@@ -89,12 +107,12 @@ All variables must be initialized before use.
     | size |
 ```
 
--*-*-
+***
 
 ## Rust Syntax: Ownership and Moves
 
 
--*-*-
+***
 
 
 ## Rust Syntax: Tuples
@@ -115,7 +133,7 @@ pair.1; // this is 17
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Rust Syntax: Destructuring Tuples
 
@@ -139,7 +157,7 @@ let (_, right) = slice.split_at(middle);
 
 The variable `_` is commonly used to throw away values.
 
--*-*-
+***
 
 ## Rust Syntax: Functions
 
@@ -160,7 +178,7 @@ fn fair_dice_roll() -> i32 {
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Rust Syntax: Blocks
 
@@ -178,7 +196,7 @@ fn fair_dice_roll() -> i32 {
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Rust Syntax: Expressions
 
@@ -198,7 +216,7 @@ let x = {
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Rust Syntax: Expressions
 
@@ -227,7 +245,7 @@ fn fair_dice_roll() -> i32 {
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Rust Syntax: Modules
 
@@ -247,7 +265,7 @@ let least = min(7, 1); // this is 1
 
 `use` directives can be used to "bring in scope" names from other namespaces.
 
--*-*-
+***
 
 ## Rust Syntax: Types
 
@@ -259,7 +277,7 @@ let x = str::len("amos"); // this is also 4
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Rust Syntax: Structs
 
@@ -280,7 +298,7 @@ let v2 = Vec2 { y: 2.0, x: 4.0 };
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Rust Syntax: Destructuring Structs
 
@@ -298,13 +316,13 @@ let Vec2 { x, .. } = v;
 <!-- .element class="very-big" --->
 
 
--*-*-
+***
 
 ## (Rust Syntax: Pattern Matching)
 
 
 
--*-*-
+***
 
 ## Rust Syntax: Methods
 
@@ -324,7 +342,7 @@ impl Number {
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Rust Syntax: Immutability
 
@@ -347,7 +365,7 @@ n = Number {
 <!-- .element class="very-big" --->
 
 
--*-*-
+***
 
 ## Rust Syntax: Immutability
 
@@ -363,7 +381,7 @@ n.value = 19; // all good
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Rust Syntax: Macros
 
@@ -386,7 +404,7 @@ fn main() {
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Rust Syntax: Enums
 
@@ -403,7 +421,7 @@ enum Message {
 let msg = Message::Move;
 ```
 
--*-*-
+***
 
 ## Rust Syntax: Enums
 
@@ -421,23 +439,23 @@ let msg = Message::Move { x: 42, y: 0 };
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 ## Rust Syntax: Option
--*-*-
+***
 ## Rust Syntax: Result
--*-*-
+***
 
 ## Rust Syntax: Error Handling
 
--*-*-
+***
 
 ## Rust Syntax: Iterators
 
--*-*-
+***
 
 ## Rust Syntax: Closures
 
--*-*-
+***
 
 ## Rust Syntax: Traits
 
@@ -461,7 +479,7 @@ fn main() {
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Rust Syntax: Traits
 
@@ -492,7 +510,7 @@ impl std::ops::Neg for Number {
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Rust Syntax: Traits
 
@@ -504,7 +522,7 @@ impl std::ops::Neg for Number {
 
 * impl Trait return type
 
--*-*-
+***
 
 ## Rust Syntax: Generics
 
@@ -532,7 +550,7 @@ where
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Rust Syntax: Generics
 
@@ -558,15 +576,23 @@ fn main() {
 <!-- .element class="very-big" --->
 
 
--*-*-
+***
 
 ## (Rust Syntax: Lifetimes)
 
--*-*-
+***
 
 https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 
 -*-*-
+
+<div class="nr"></div>
+
+# Leptos Web Framework
+
+<!-- .slide: class="master-title" -->
+
+***
 
 # Rust for UI
 
@@ -577,7 +603,7 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 
 → https://www.thoughtworks.com/radar/languages-and-frameworks/rust-for-ui
 
--*-*-
+***
 
 ## Leptos
 
@@ -589,7 +615,7 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 * Fine-grained reactive, no virtual DOM
   * Inspired by Solid (JS) and Sycamore (Rust)
 
--*-*-
+***
 
 ## Leptos
 
@@ -601,7 +627,7 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 * Performance like fastest JavaScript frameworks
   * Even though WebAssembly has no direct access to DOM
 
--*-*-
+***
 
 ## Leptos: Life of an SSR Page Load
 
@@ -626,7 +652,7 @@ Edit:
 https://mermaid.live/edit#pako:eNqllEFP4zAQhf_KyIdVkWi5R6gSC1p1V61ABHYvubj2NLVIxsUegyrEf8dOUkhpYSs4JbK_eX5vMvGTUFajyMRwOCxIWVqYMisIoDbOWXem2DqfwUJWHgtqoII83gckhRdGlk7WCZcJhODRgfRwG59pdSUdG2VWkhjmzj522z_b15PTuRtPccXWw3llMEKDf2f57Oh9aWQf2sqOzpuFZAXaM4fj8eaADP4abzgKlNgS0Zt5kIwbIq1t3KTCVj6LqqRhcnNzBS4F9JxAjbvlW6K-8wIbm33Jaxsi0teEH_GNdOQ8y5gwbs6m_eqtKDk7lPUr0zPjey34NGDSC43Y9d5z93XiF7Jawp_8JH2O_6Td8vuByb12JmvtZNOd2RQGUmtDJRhidE294fXRQR8gdIl3B-F3JwYDHJUjUJVRdzAPzJbeSwd_UDP76hNJusI3x5Y-CHq70knv4nL2zTznTYDK0B2wBcvLCLRj_pUsO4Oh1yTrbjJg8Gh4Ca-_465rcSxqdLU0Ot4eT4kpRHRUYyHiHAiNCxkqLkRBzxGVgW2-JiUydgGPRWh60l0gImvul-cXEi2YcQ
 -->
 
--*-*-
+***
 
 ## Why Leptos SSR
 
@@ -634,7 +660,7 @@ https://mermaid.live/edit#pako:eNqllEFP4zAQhf_KyIdVkWi5R6gSC1p1V61ABHYvubj2NLVIx
 * Static parts can be read by search engines (SEO)
 * Graceful degradation for clients without JS/WASM
 
--*-*-
+***
 
 ## Installation
 
@@ -676,7 +702,7 @@ This installs stable and nightly versions of:
 
 <!-- </small> -->
 
--*-*-
+***
 
 ## Installation
 
@@ -686,11 +712,11 @@ Install Leptos support:
 cargo install cargo-leptos leptosfmt
 ```
 
--*-*-
+***
 
 ## Leptos: Reactive Primitives
 
--*-*-
+***
 
 ### Signals
 
@@ -711,7 +737,7 @@ set_count.set(1); // stable
 set_count.update(|n| *n += 1);
 ```
 
--*-*-
+***
 
 ### Derived Signals/Memos
 
@@ -729,7 +755,7 @@ let memoized_double_count = create_memo(move |_| count() * 2);
 
 → https://docs.rs/leptos/latest/leptos/fn.create_memo.html
 
--*-*-
+***
 
 ### Effects
 
@@ -744,13 +770,13 @@ create_effect(move |_| {
 });
 ```
 
--*-*-
+***
 
 ### Contexts
 
 Share state accross components (like React Context)
 
--*-*-
+***
 
 ## Leptos: Basic Component (1)
 
@@ -782,7 +808,7 @@ fn App() -> impl IntoView {
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Leptos: Basic Component (2)
 
@@ -792,7 +818,7 @@ What happens?
 * `view!` macro converts RSX into function calls
 * `App` function is executed once only ⚠️
 
--*-*-
+***
 
 ## Leptos: Basic Component (3)
 
@@ -801,7 +827,7 @@ What happens?
   * passes event as arg to closure (is ignored)
 * `count` reads signal value (reactive)
 
--*-*-
+***
 
 ## Leptos: Dynamic Attributes
 
@@ -825,7 +851,7 @@ What happens?
 ```
 <!-- .element class="very-big" --->
 
--*-*-
+***
 
 ## Leptos: Component Props
 
@@ -841,7 +867,7 @@ pub fn Hello(name: String) -> impl IntoView {
 }
 ```
 
--*-*-
+***
 
 ## Leptos: Static Iteration
 
@@ -864,7 +890,7 @@ pub fn List() -> impl IntoView {
 - Inefficient: re-renders every element in the list
 - Use for static lists
 
--*-*-
+***
 
 ## Leptos: Dynamic Iteration
 
@@ -887,7 +913,7 @@ pub fn List() -> impl IntoView {
 - Key must be unique
 - Reuses existing items
 
--*-*-
+***
 
 ## Leptos: Control Flow
 
@@ -928,7 +954,7 @@ Variante optional else:
 }
 ```
 
--*-*-
+***
 
 ## Leptos: Children
 
@@ -953,7 +979,7 @@ pub fn Header(
 </Header>
 ```
 
--*-*-
+***
 
 ## Leptos: Render Props
 
@@ -979,7 +1005,7 @@ where
 <TakesChildren actions=|| view! { <p>Some actions</p> } />
 ```
 
--*-*-
+***
 
 ## Leptos: Managing State
 
@@ -990,13 +1016,13 @@ where
 - Create lenses into state struct with `create_slice`
 - State in URL
 
--*-*-
+***
 
 ## Leptos: Form Handling
 
 TODO: skip this topic?
 
--*-*-
+***
 
 ### Leptos: Async Primitives
 
@@ -1005,7 +1031,7 @@ TODO: skip this topic?
 * Action: \
   imperative async task (data mutation)
 
--*-*-
+***
 
 ### Leptos: Async Streaming Modes
 
@@ -1016,7 +1042,7 @@ TODO: skip this topic?
 * `<Transition/>`: \
   Shows children if resource ready, previous data or fallback otherwise
 
--*-*-
+***
 
 ### Leptos: Server Functions & Hydration
 
@@ -1026,7 +1052,7 @@ TODO: dani?
 - Server Functions
 - Hydration: How to pass data from SSR to the client for further processing.
 
--*-*-
+***
 
 ## Leptos: Routing (1)
 
@@ -1039,7 +1065,7 @@ note:
 
 Similar to React Router
 
--*-*-
+***
 
 ## Leptos: Routing (2)
 
@@ -1050,7 +1076,7 @@ Similar to React Router
 
 https://book.leptos.dev/router/16_routes.html
 
--*-*-
+***
 
 ## Leptos: Styling Components
 
@@ -1069,7 +1095,7 @@ note:
 - Stylance: in separate file
 - Styled: inline
 
--*-*-
+***
 
 ## Leptos: Islands Architecture (1)
 
@@ -1079,7 +1105,7 @@ note:
   (only run on the server)
 - Pass props, children, context between islands
 
--*-*-
+***
 
 ## Leptos: Islands Architecture (2)
 
@@ -1092,10 +1118,34 @@ https://book.leptos.dev/islands.html
 
 -*-*-
 
-# Resources
+<div class="nr"></div>
+
+# Closing
+
+<!-- .slide: class="master-title" -->
+
+***
+
+## Resources
 
 - [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
 - [Leptos book](https://book.leptos.dev/)
 - [Leptos API documentation](https://docs.rs/leptos/)
-- [Slides repository](https://github.com/puzzle/tws24-fullstack-rust-slides)
-- [Examples repository](https://github.com/puzzle/tws24-fullstack-rust-examples)
+- [Official Leptos examples](https://github.com/leptos-rs/leptos/tree/main/examples)
+- Workshop: [Slides](https://github.com/puzzle/tws24-fullstack-rust-slides), [examples](https://github.com/puzzle/tws24-fullstack-rust-examples)
+
+***
+
+## Hands-On Ideas
+
+TODO: list some ideas
+
+***
+
+## Credits
+
+Authors: \
+Dani Tschan, Mathis Hofer \
+Puzzle ITC
+
+Licensed under the terms of the GNU GPL-3.0 license.
