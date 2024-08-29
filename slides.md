@@ -629,6 +629,25 @@ https://fasterthanli.me/articles/a-half-hour-to-learn-rust
 
 ***
 
+## Leptos: CSR vs. SSR
+
+<img src="https://mermaid.ink/svg/pako:eNqNksFqwzAMhl9F6ORC-gJhFFL3sJUMRl3oxRcnUVcPxwm2s5G1ffc5y0Y6SrfpZKSfX78-fMSyqQhT3JvmrTwoF2C7khZi-a54dqo9gMSc2tB4EGIjcRwOVWlHZdCNhXwzdXPBJjk8ueYlimYwny9OMi6rW20ISqPJBmjjPi_xBDvBdlRk3lNdmB6W2irXzy5NBwNYC_ZgddDK6Hf1uXktrlWZYPfbxzwBLkQCg2nwV6qLMJ7cK7kpjFgyMbZ-5CBbSXsLDf8XGs4uWX7DuSvcgm06H2YSR1BfySIX_gcXPnLhv3MZVRm_ySXehgnW5Gqlq_gbjkNbYjhQTRLT-KxorzoThiPPUaq60IjelpgG11GCXVupQCutIpca070yns4f9Pi42w" />
+
+<!--
+Edit:
+https://mermaid.live/edit#pako:eNqNksFqwzAMhl9F6ORC-gJhFFL3sJUMRl3oxRcnUVcPxwm2s5G1ffc5y0Y6SrfpZKSfX78-fMSyqQhT3JvmrTwoF2C7khZi-a54dqo9gMSc2tB4EGIjcRwOVWlHZdCNhXwzdXPBJjk8ueYlimYwny9OMi6rW20ISqPJBmjjPi_xBDvBdlRk3lNdmB6W2irXzy5NBwNYC_ZgddDK6Hf1uXktrlWZYPfbxzwBLkQCg2nwV6qLMJ7cK7kpjFgyMbZ-5CBbSXsLDf8XGs4uWX7DuSvcgm06H2YSR1BfySIX_gcXPnLhv3MZVRm_ySXehgnW5Gqlq_gbjkNbYjhQTRLT-KxorzoThiPPUaq60IjelpgG11GCXVupQCutIpca070yns4f9Pi42w
+-->
+
+note:
+
+- Leptos verwendet Trunk builden/bundlen als WASM
+- CSR: Artefakte können statisch geserved werden (analog JS SPA)
+- SSR:
+  - Server served auch WASM Binary
+  - Alternativ: Fullstack WASM/WASI für WinterCG-kompatible Runtime
+
+***
+
 ## Leptos: Life of an SSR Page Load
 
 <!-- On server:
@@ -662,15 +681,16 @@ https://mermaid.live/edit#pako:eNqllE9P4zAQxb_KyIdVK1G4R6tKbBEqK6pFpOweCAc3nqYWy
 
 ***
 
-## Installation
+## Installation: Rust
 
-Install Rust, should work on Linux and macOS:
+Install<sup>*</sup>:
 
 ```sh
 curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 rustup toolchain install nightly
 rustup target add wasm32-unknown-unknown
 ```
+
 
 <!-- <small> -->
 
@@ -699,18 +719,31 @@ This installs stable and nightly versions of:
 </small>
 </div>
 
+</div>
 
 <!-- </small> -->
 
+<small><sup>*</sup>should work on Linux and macOS</small>
+
 ***
 
-## Installation
+## Installation: Leptos
 
-Install Leptos support:
+- (CSR: [Manual setup](https://book.leptos.dev/getting_started/index.html) with [Trunk](https://trunkrs.dev/) and `leptos` crate.)
+- SSR: Generate with [cargo-leptos](https://github.com/leptos-rs/cargo-leptos) \
+  <small>→ build tool with scaffolding support & best practices</small>
+
+Install:
 
 ```sh
 cargo install cargo-leptos leptosfmt
 ```
+
+note:
+
+- CSR Projekte müssen selber eingerichtet werden
+- SSR Projekte können scaffolded werden
+- Wir fokussieren uns auf SSR, nur `cargo-leptos` einrichten
 
 ***
 
