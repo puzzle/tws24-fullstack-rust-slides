@@ -329,7 +329,7 @@ h1, h2, h3, h4 {
     margin: 0rem 0 1rem 0; }
 
 .reveal .slide-background.master-cover {
-  background: url(/css/theme/source/puzzle-imgs/01_cover_bottom_left.svg) bottom left, linear-gradient(to right, #003870, #1d5995);
+  background: url(source/puzzle-imgs/01_cover_bottom_left.svg) bottom left, linear-gradient(to right, #003870, #1d5995);
   background-color: #1E5A96;
   background-repeat: no-repeat;
   background-size: contain; }
@@ -354,7 +354,7 @@ h1, h2, h3, h4 {
   font-weight: 300; }
 
 .reveal .slide-background.master-agenda {
-  background: url(/css/theme/source/puzzle-imgs/02_agenda_top_right.svg) top right;
+  background: url(source/puzzle-imgs/02_agenda_top_right.svg) top right;
   background-color: #FFF;
   background-repeat: no-repeat;
   background-size: contain; }
@@ -402,7 +402,7 @@ h1, h2, h3, h4 {
   left: 0; }
 
 .reveal .slide-background.master-left-right {
-  background: url(/css/theme/source/puzzle-imgs/arrow_right.svg) no-repeat calc(50% + 30px) center;
+  background: url(source/puzzle-imgs/arrow_right.svg) no-repeat calc(50% + 30px) center;
   background-size: 60px; }
 
 .slides section.master-left-right {
@@ -448,7 +448,7 @@ h1, h2, h3, h4 {
       color: #fff; }
   .slides section.master-top-head > div:last-child {
     padding-top: 6rem;
-    background: url(/css/theme/source/puzzle-imgs/arrow_down.svg) no-repeat center 0;
+    background: url(source/puzzle-imgs/arrow_down.svg) no-repeat center 0;
     box-shadow: 100vw 100vw 0 100vw #fff, -100vw 100vw 0 100vw #fff; }
 
 .overview section.master-top-head > div:last-child {
@@ -456,7 +456,7 @@ h1, h2, h3, h4 {
 
 .reveal .slide-background.master-team,
 .reveal .slide-background.master-team-2 {
-  background: url(/css/theme/source/puzzle-imgs/puzzle_team_2019.jpg) center center no-repeat;
+  background: url(source/puzzle-imgs/puzzle_team_2019.jpg) center center no-repeat;
   background-size: cover; }
 
 .slides section.master-team h1, .slides section.master-team h2, .slides section.master-team h3, .slides section.master-team h4, .slides section.master-team p,
@@ -490,7 +490,7 @@ h1, h2, h3, h4 {
   box-shadow: none; }
 
 .reveal .slide-background.master-thanks {
-  background: url(/css/theme/source/puzzle-imgs/03_thanks_bottom_left.svg) bottom left, linear-gradient(to right, #003870, #1d5995);
+  background: url(source/puzzle-imgs/03_thanks_bottom_left.svg) bottom left, linear-gradient(to right, #003870, #1d5995);
   background-color: #1E5A96;
   background-repeat: no-repeat;
   background-size: contain; }
