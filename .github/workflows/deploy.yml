@@ -29,7 +29,9 @@ jobs:
         run: |
           npm run build
           mkdir build
-          mv {index.html,slides.md,css,dist,pitc-revealjs-theme,plugin} build
+
+          sed -e "s~<head>~<head><base href=\"/tws24-fullstack-rust-slides/\" />~g" index.html > build/index.html
+          mv {slides.md,css,dist,pitc-revealjs-theme,plugin} build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
