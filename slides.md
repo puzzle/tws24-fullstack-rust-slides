@@ -1156,14 +1156,6 @@ where
 
 ***
 
-## Leptos: Form Handling
-
-Like in React or SolidJS there are:
-
-* Controlled inputs: Leptos controls input element
-* Uncontrolled inputs: browser controls input element
-
-See [Leptos documentation](https://book.leptos.dev/view/05_forms.html) for more information.
 
 ***
 
