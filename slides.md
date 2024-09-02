@@ -1412,7 +1412,7 @@ https://book.leptos.dev/islands.html
 - [Leptos API documentation](https://docs.rs/leptos/)
 - [Official Leptos examples](https://github.com/leptos-rs/leptos/tree/main/examples)
 - [Awesome Leptos collection](https://github.com/leptos-rs/awesome-leptos)
-- Workshop: [Slides](https://github.com/puzzle/tws24-fullstack-rust-slides), [examples](https://github.com/puzzle/tws24-fullstack-rust-examples)
+- Workshop: [Slides](https://puzzle.github.io/tws24-fullstack-rust-slides/), [examples](https://github.com/puzzle/tws24-fullstack-rust-examples)
 
 ***
 
