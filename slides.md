@@ -453,10 +453,6 @@ let msg = Message::Move { x: 42, y: 0 };
 
 ***
 
-## Rust Syntax: Closures
-
-***
-
 ## Rust Syntax: Traits
 
 Traits are something multiple types have in common:
@@ -524,6 +520,67 @@ impl std::ops::Neg for Number {
 
 ***
 
+## Rust Syntax: Closures
+
+```rust
+let add_one = |x| x + 1;
+println!("{}", add_one(2)); // prints 3
+```
+
+* Closures are functions with captured context
+* Parameter types are infered if possible
+* Closures that capture variables by reference are subjected to lifetime rules
+* Closure have unique types, but implement traits
+
+***
+
+## Rust Syntax: Closures
+
+`Fn`: For closures that don't mutate or move captured variables
+
+```rust
+let hello = String::from("Hello");
+let msg = || hello.clone() + " World";
+```
+<!-- .element class="very-big" --->
+
+Captures `hello` as `&String` because of `String::clone(&self) -> String`
+
+***
+
+## Rust Syntax: Closures
+
+`FnMut`: For closures that mutate but don't move captured variables
+
+```rust
+let mut hello = String::from("Hello");
+let mut msg = || hello.push_str(" World");
+```
+<!-- .element class="very-big" --->
+
+Captures `hello` as `&mut String` because of `String::push_str(&mut self, string: &str)`
+
+***
+
+## Rust Syntax: Closures
+
+`FnOnce`: For closures that move captured variables out of their bodies
+
+```rust
+let hello = String::from("Hello")
+let msg = || hello + " World";
+```
+<!-- .element class="very-big" --->
+
+Captures `hello` as `String` and moves it out of the closure on first call because of `String::add(self, other: &str) -> String`
+
+
+***
+
+
+
+***
+
 ## Rust Syntax: Generics
 
 Functions can be generic:
@@ -574,6 +631,35 @@ fn main() {
 }
 ```
 <!-- .element class="very-big" --->
+
+
+***
+
+## Rust Syntax: Async
+
+Rust supports async functions and blocks.
+
+```rust
+async fn foo() -> u8 { 5 }
+```
+
+```rust
+async {
+    let x: u8 = foo().await;
+    x + 5
+}
+```
+
+* They return a value that implements the `Future` trait.
+* `await` runs a future and waits for its completion.
+* Futures store the variables used in async functions/blocks
+* There are no async closures in stable Rust yet
+<!-- .element style="list-style-position: inside; padding-left: 0;" --->
+
+***
+
+## Rust Syntax: Async
+
 
 
 ***
@@ -1070,6 +1156,17 @@ where
 
 ***
 
+## Leptos: Form Handling
+
+Like in React or SolidJS there are:
+
+* Controlled inputs: Leptos controls input element
+* Uncontrolled inputs: browser controls input element
+
+See [Leptos documentation](https://book.leptos.dev/view/05_forms.html) for more information.
+
+***
+
 ### Leptos: Async Primitives
 
 * Resource: \
@@ -1089,6 +1186,122 @@ where
   Shows children if resource ready, previous data or fallback otherwise
 
 ***
+
+## Leptos: Resources
+
+```rust
+// our source signal: some synchronous, local state
+let (count, set_count) = create_signal(0);
+
+// our resource
+let async_data = create_resource(
+    count,
+    // every time `count` changes, this will run
+    |value| async move {
+        logging::log!("loading data from API");
+        load_data(value).await
+    },
+);
+```
+<!-- .element class="very-big" --->
+
+Use empty signal to create resource that runs once:
+
+```rust
+let once = create_resource(|| (), |_| async move { load_data().await });
+```
+<!-- .element class="very-big" --->
+
+***
+
+## Leptos: Suspense
+
+```rust
+let (name, set_name) = create_signal("Bill".to_string());
+
+let async_data = create_resource(
+    name,
+    |name| async move { important_api_call(name).await },
+);
+
+view! {
+    <p><code>"name:"</code> {name}</p>
+    <Suspense
+        // the fallback will show whenever a resource
+        // read "under" the suspense is loading
+        fallback=move || view! { <p>"Loading..."</p> }
+    >
+        // the children will be rendered once initially,
+        // and then whenever any resources has been resolved
+        <p>
+            "Your shouting name is "
+            {move || async_data.get()}
+        </p>
+    </Suspense>
+}
+```
+<!-- .element class="very-big" --->
+
+***
+
+## Leptos: Await
+
+```rust
+async fn calc_ultimate_answer() -> i32 {
+    TimeoutFuture::new(1_000).await;
+    42
+}
+
+view! {
+    <Await
+        // `future` provides the `Future` to be resolved
+        future=|| calc_ultimate_answer()
+        // the data is bound to whatever variable name you provide
+        let:data
+    >
+        // you receive the data by reference and can use it in your view here
+        <p>"The answer to life, the universe, and everything is " {*data}</p>
+    </Await>
+}
+```
+<!-- .element class="very-big" --->
+
+***
+
+## Leptos: Action
+
+```rust
+let submitted = add_todo_action.input(); // RwSignal<Option<String>>
+let pending = add_todo_action.pending(); // ReadSignal<bool>
+let todo_id = add_todo_action.value(); // RwSignal<Option<Uuid>>
+
+let input_ref = create_node_ref::<Input>();
+
+view! {
+    <form
+        on:submit=move |ev| {
+            ev.prevent_default(); // don't reload the page...
+            let input = input_ref.get().expect("input to exist");
+            add_todo_action.dispatch(input.value());
+        }
+    >
+        <label>
+            "What do you need to do?"
+            <input type="text"
+                node_ref=input_ref
+            />
+        </label>
+        <button type="submit">"Add Todo"</button>
+    </form>
+    // use our loading state
+    <p>{move || pending().then("Loading...")}</p>
+}
+```
+<!-- .element class="very-big" --->
+
+
+***
+
 
 ### Leptos: Server Functions & Hydration
 
