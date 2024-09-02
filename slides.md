@@ -1156,10 +1156,7 @@ where
 
 ***
 
-
-***
-
-### Leptos: Async Primitives
+## Leptos: Async Primitives
 
 * Resource: \
   Reactive (signal-based) async task (data fetching)
@@ -1168,18 +1165,7 @@ where
 
 ***
 
-### Leptos: Async Streaming Modes
-
-* `<Suspense/>`: \
-  Shows children if resource ready, fallback otherwise
-* `<Await/>`: \
-  Shows children if future ready, nothing otherwise
-* `<Transition/>`: \
-  Shows children if resource ready, previous data or fallback otherwise
-
-***
-
-## Leptos: Resources
+### Resource
 
 ```rust
 // our source signal: some synchronous, local state
@@ -1206,61 +1192,7 @@ let once = create_resource(|| (), |_| async move { load_data().await });
 
 ***
 
-## Leptos: Suspense
-
-```rust
-let (name, set_name) = create_signal("Bill".to_string());
-
-let async_data = create_resource(
-    name,
-    |name| async move { important_api_call(name).await },
-);
-
-view! {
-    <p><code>"name:"</code> {name}</p>
-    <Suspense
-        // the fallback will show whenever a resource
-        // read "under" the suspense is loading
-        fallback=move || view! { <p>"Loading..."</p> }
-    >
-        // the children will be rendered once initially,
-        // and then whenever any resources has been resolved
-        <p>
-            "Your shouting name is "
-            {move || async_data.get()}
-        </p>
-    </Suspense>
-}
-```
-<!-- .element class="very-big" --->
-
-***
-
-## Leptos: Await
-
-```rust
-async fn calc_ultimate_answer() -> i32 {
-    TimeoutFuture::new(1_000).await;
-    42
-}
-
-view! {
-    <Await
-        // `future` provides the `Future` to be resolved
-        future=|| calc_ultimate_answer()
-        // the data is bound to whatever variable name you provide
-        let:data
-    >
-        // you receive the data by reference and can use it in your view here
-        <p>"The answer to life, the universe, and everything is " {*data}</p>
-    </Await>
-}
-```
-<!-- .element class="very-big" --->
-
-***
-
-## Leptos: Action
+### Action
 
 ```rust
 let submitted = add_todo_action.input(); // RwSignal<Option<String>>
@@ -1291,11 +1223,74 @@ view! {
 ```
 <!-- .element class="very-big" --->
 
+***
+
+## Leptos: Streaming Modes
+
+* `<Suspense/>`: \
+  Shows children if resource ready, fallback otherwise
+* `<Await/>`: \
+  Shows children if future ready, nothing otherwise
+* `<Transition/>`: \
+  Shows children if resource ready, previous data or fallback otherwise
 
 ***
 
+### Suspense
 
-### Leptos: Server Functions & Hydration
+```rust
+let (name, set_name) = create_signal("Bill".to_string());
+
+let async_data = create_resource(
+    name,
+    |name| async move { important_api_call(name).await },
+);
+
+view! {
+    <p><code>"name:"</code> {name}</p>
+    <Suspense
+        // the fallback will show whenever a resource
+        // read "under" the suspense is loading
+        fallback=move || view! { <p>"Loading..."</p> }
+    >
+        // the children will be rendered once initially,
+        // and then whenever any resources has been resolved
+        <p>
+            "Your shouting name is "
+            {move || async_data.get()}
+        </p>
+    </Suspense>
+}
+```
+<!-- .element class="very-big" --->
+
+***
+
+### Await
+
+```rust
+async fn calc_ultimate_answer() -> i32 {
+    TimeoutFuture::new(1_000).await;
+    42
+}
+
+view! {
+    <Await
+        // `future` provides the `Future` to be resolved
+        future=|| calc_ultimate_answer()
+        // the data is bound to whatever variable name you provide
+        let:data
+    >
+        // you receive the data by reference and can use it in your view here
+        <p>"The answer to life, the universe, and everything is " {*data}</p>
+    </Await>
+}
+```
+<!-- .element class="very-big" --->
+
+***
+
+## Leptos: Server Functions & Hydration
 
 TODO: dani?
 
