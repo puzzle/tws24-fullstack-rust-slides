@@ -559,7 +559,7 @@ Generates implementations for the given traits.
 
 ## Rust : Enums
 
-Rust enums can just be constants like  in other languages:
+Rust enums can just be constants like in other languages:
 
 ```rust
 enum Message {
@@ -895,7 +895,7 @@ async {
 * Don't store references in structs and closures
   * Use owned values instead, i.e. String, not &str
   * Use `move` closures to capture values by move
-* Clone values which are still neeeded before move
+* Clone values which are still needed before move
 * Use `to_owned` to clone `&str` into `String`
 * Use `cloned` to clone elements while iterating
 
@@ -918,7 +918,7 @@ async {
     <!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 * Syntactically this is a block returning a closure
-* Shadowing like this is idiomatic in rust
+* Shadowing like this is idiomatic in Rust
 
 ***
 
@@ -1081,10 +1081,15 @@ https://mermaid.live/edit#pako:eNqllE9P4zAQxb_KyIdVK1G4R6tKbBEqK6pFpOweCAc3nqYWy
 
 ## Why Leptos SSR
 
+* Simplify working across the server/client boundary
 * Improved load times \
   <small>→ First Contentful Paint</small>
 * Static parts can be read by search engines (SEO)
 * Graceful degradation for clients without JS/WASM
+
+note:
+
+- Gleiche Komponente kann sowohl auf dem Client wie auch auf dem Server gerendered werden.
 
 ***
 ## Installation: Leptos
@@ -1101,8 +1106,8 @@ cargo install cargo-leptos leptosfmt
 
 note:
 
-- CSR Projekte müssen selber eingerichtet werden
-- SSR Projekte können scaffolded werden
+- CSR Projekte müssen selber eingerichtet werden, es gibt aber auch Projekt-Templates
+- SSR Projekte können mit Hilfe von cargo-leptos scaffolded werden
 - Wir fokussieren uns auf SSR, nur `cargo-leptos` einrichten
 
 ***
@@ -1168,7 +1173,7 @@ create_effect(move |_| {
 
 ***
 
-### Rective Primitives are Copy
+### Reactive Primitives are Copy
 
 * Leptos reactive primitives are `Copy`
 * Value semantics, no lifetime issues
@@ -1214,7 +1219,8 @@ fn App() -> impl IntoView {
 
 note:
 
-* `#[component]` macro annotates `App` function to be used in templates as `<App />`
+* Bootstrapping: Mount `App` component into `<body>`
+* `#[component]` macro generates implementation of IntoView trait for `App` function (can then be used in templates as `<App />`); 
 * `view!` macro converts RSX into function calls
 * `App` function is executed once only ⚠️
 * `create_signal` creates r/w signal with initial state
@@ -1370,7 +1376,7 @@ pub fn List() -> impl IntoView {
 
 note:
 
-Variante optional else:
+Variante optional else (mit `Option<T>` Enum Type):
 
 ```
 {move ||
@@ -1641,7 +1647,7 @@ spawn_local(async {
 
 ## Leptos: Routing (1)
 
-- Separate `leptos_router` package
+- Separate `leptos_router` crate
 - Supports CSR, SSR & Hydration
 - Define routes in component view with `<Router>` and `<Route path="/about" view=About />`
 - Create links with `<A>`
@@ -1694,8 +1700,8 @@ note:
 
 - `<Stylesheet>`: creates `<link>` tag, preprocessed with cargo-leptos
 - Stylers: unscoped, inline or in separate file
-- Stylance: in separate file
-- Styled: inline
+- Stylance: scope, in separate file
+- Styled: scoped, inline
 
 ***
 
@@ -1703,9 +1709,9 @@ note:
 
 - Experimental ⚠️
 - Use `#[island]` for "client components" \
-  (included in WASM binary)
+  <small>→included in WASM binary</small>
 - Use `#[component]` for "server components" \
-  (only run on the server)
+  <small>→ only run on the server, not in WASM binary</small>
 - Pass props, children, context between islands
 
 ***
@@ -1740,7 +1746,7 @@ https://book.leptos.dev/islands.html
 
 ***
 
-## Resources
+## Resources: Rust
 
 - [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
 - [Rust book](https://doc.rust-lang.org/book/)
@@ -1750,19 +1756,23 @@ https://book.leptos.dev/islands.html
 
 ***
 
-## Resources
+## Resources: Leptos
 
 - [Leptos book](https://book.leptos.dev/)
 - [Leptos API documentation](https://docs.rs/leptos/)
 - [Official Leptos examples](https://github.com/leptos-rs/leptos/tree/main/examples)
 - [Awesome Leptos collection](https://github.com/leptos-rs/awesome-leptos)
-- Workshop: [Slides](https://puzzle.github.io/tws24-fullstack-rust-slides/), [examples](https://github.com/puzzle/tws24-fullstack-rust-examples)
+- Workshop slides: \
+  [puzzle.github.io/tws24-fullstack-rust-slides](https://puzzle.github.io/tws24-fullstack-rust-slides)
+- Workshop examples: \
+  [github.com/puzzle/tws24-fullstack-rust-examples](https://github.com/puzzle/tws24-fullstack-rust-examples)
 
 ***
 
 ## Hands-On Ideas
 
-- Play with interactive examples in [Leptos book](https://book.leptos.dev/)
+- Play with interactive examples in [Leptos book](https://book.leptos.dev/) \
+  <small>→ Expand "Live example" (CodeSandbox) at the end of the pages</small>
 - Study [SSR Todo example](https://github.com/puzzle/tws24-fullstack-rust-examples/blob/main/todo_app_sqlite_axum/)
     - Implement edit
     - Implement done state
@@ -1776,10 +1786,12 @@ https://book.leptos.dev/islands.html
 
 ***
 
-## Thanks! Questions?
+## Thanks! Any questions?
 
 Authors: \
 Daniel Tschan, Mathis Hofer \
 Puzzle ITC
 
 Licensed under the terms of the GNU GPL-3.0 license.
+
+https://github.com/puzzle/tws24-fullstack-rust-slides
