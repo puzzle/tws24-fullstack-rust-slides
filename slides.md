@@ -155,7 +155,7 @@ Rust has four major categories of collections:
 
 * Rust types are inferred where possible
 * Function arguments must always be specified
-  * To prevent implementation from changes affecting call sites
+  * To prevent implementation changes from affecting call sites
 * Rust supports partial type inference:
 
     ```rust
@@ -263,7 +263,7 @@ The use of references is govenered by borrowing rules:
 
 * There can be either multiple immutable references to a value
 * Or exactly one mutable reference
-* A mutably referenced value can only be access through that reference
+* A mutably referenced value can only be accessed through that reference
 * A reference cannot outlive the referenced value
 
 ***
@@ -271,7 +271,24 @@ The use of references is govenered by borrowing rules:
 ## Rust: Lifetimes
 
 Every variable binding has a lifetime:
+```rust
+{
+    // `x` doesn't exist yet
+    {
+        let x = 42; // `x` starts existing
+        println!("x = {}", x);
+        // `x` stops existing
+    }
+    // `x` no longer exists
+}
 ```
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
+
+***
+## Rust: Lifetimes
+
+Reference cannot outlive referenced value:
+```rust
 let r;
 {
     let i = 1;
@@ -476,6 +493,8 @@ fn print_number(n: Number) {
 ```
 <!-- .element class="very-big" --->
 
+<small>Can match arbitrary complex structures of structs, enums and tuples.</small>
+
 ***
 
 ## Rust: Methods
@@ -552,7 +571,7 @@ enum Message {
 
 let msg = Message::Move;
 ```
-<!-- .element class="very-big" style="margin-top: 0.5em;" --->
+<!-- .element class="very-big" --->
 
 ***
 
@@ -570,7 +589,7 @@ enum Message {
 
 let msg = Message::Move { x: 42, y: 0 }; 
 ```
-<!-- .element class="very-big" style="margin-top: 0.5em;" --->
+<!-- .element class="very-big" --->
 
 ***
 
@@ -719,9 +738,11 @@ impl std::ops::Neg for Number {
 ## Rust: Closures
 
 ```rust
-let add_one = |x| x + 1;
-println!("{}", add_one(2)); // prints 3
+let num = 5;
+let plus_num = |x| x + num;
+println!("{}", plus_num(2)); // prints 7
 ```
+<!-- .element class="very-big" --->
 
 * Closures are functions with captured context
 * Parameter types are infered if possible
@@ -870,6 +891,7 @@ async {
 
 ## Beginner Borrow Checker Tips
 
+* Limit the scope of references
 * Don't store references in structs and closures
   * Use owned values instead, i.e. String, not &str
   * Use `move` closures to capture values by move
@@ -1006,7 +1028,7 @@ This installs stable and nightly versions of:
 * Based on Web standards \
   <small>→ Router based on links and forms</small>
 * JSX-like template format: RSX
-* Signals have value semantics \
+* Reactive primitives have value semantics \
   <small>→ No fights with the borrow checker</small>
 * [Performance](https://www.youtube.com/watch?v=4KtotxNAwME) like fastest JavaScript frameworks \
   <small>→ Even though WebAssembly has no direct access to DOM</small>
@@ -1107,6 +1129,8 @@ set_count.set(1); // stable
 // Update state
 set_count.update(|n| *n += 1);
 ```
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
+
 
 ***
 
@@ -1123,6 +1147,7 @@ let derived_signal_double_count = move || count() * 2;
 // Memo (for expensive computations)
 let memoized_double_count = create_memo(move |_| count() * 2);
 ```
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 → https://docs.rs/leptos/latest/leptos/fn.create_memo.html
 
@@ -1140,6 +1165,16 @@ create_effect(move |_| {
   log::debug!("Count: {}", count());
 });
 ```
+
+***
+
+### Rective Primitives are Copy
+
+* Leptos reactive primitives are `Copy`
+* Value semantics, no lifetime issues
+* Can moved into multiple closures and structs without cloning
+
+See this [Appendix](https://book.leptos.dev/appendix_life_cycle.html) for more information how this works.
 
 ***
 
@@ -1272,6 +1307,7 @@ pub fn List() -> impl IntoView {
     }
 }
 ```
+<!-- .element class="very-big" style="margin-bottom: 0.5em;" --->
 
 - Inefficient: re-renders every element in the list
 - Use for static lists
@@ -1299,6 +1335,7 @@ pub fn List() -> impl IntoView {
     }
 }
 ```
+<!-- .element class="very-big" style="margin-bottom: 0.5em;" --->
 
 - Key must be unique
 - Reuses existing items
@@ -1329,6 +1366,7 @@ pub fn List() -> impl IntoView {
     }
 }
 ```
+<!-- .element class="very-big" --->
 
 note:
 
@@ -1410,10 +1448,12 @@ where
 
 ## Leptos: Async Primitives
 
-* Resource: \
-  Reactive (signal-based) async task (data fetching)
-* Action: \
-  imperative async task (data mutation)
+<dl>
+<dt>Resource</dt>
+<dd>Reactive (signal-based) async task (data fetching)<dd>
+<dt>Action</dt>
+<dd>imperative async task (data mutation)</dd>
+</dl>
 
 ***
 
@@ -1440,7 +1480,7 @@ Use empty signal to create resource that runs once:
 ```rust
 let once = create_resource(|| (), |_| async move { load_data().await });
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 ***
 
@@ -1479,12 +1519,14 @@ view! {
 
 ## Leptos: Async Components
 
-* `<Suspense/>`: \
-  Shows children if resource ready, fallback otherwise
-* `<Await/>`: \
-  Shows children if future ready, nothing otherwise
-* `<Transition/>`: \
-  Shows children if resource ready, previous data or fallback otherwise
+<dl>
+<dt>&lt;Suspense/&gt;</dt>
+<dd>Shows children if resource ready, fallback otherwise</dd>
+<dt>&lt;Await/&gt;</dt>
+<dd>Shows children if future ready, nothing otherwise</dd>
+<dt>&lt;Transition/&gt;</dt>
+<dd>Shows children if resource ready, previous data or fallback otherwise</dd>
+</dl>
 
 ***
 
@@ -1592,7 +1634,7 @@ spawn_local(async {
   * Allows them to be called from HTML forms
   * Graceful degradation when JS/WASM isn't available
 * Results are encoded with JSON 
-* Can be switched to `GET` for function for caching
+* Can be switched to `GET` per function for caching
 * Arguments and results must be serializable
 
 ***
@@ -1701,6 +1743,15 @@ https://book.leptos.dev/islands.html
 ## Resources
 
 - [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
+- [Rust book](https://doc.rust-lang.org/book/)
+- [Rust by Example](https://doc.rust-lang.org/rust-by-example/)
+- [Rustlings](https://github.com/rust-lang/rustlings)
+- [Rust fact vs. fiction](https://opensource.googleblog.com/2023/06/rust-fact-vs-fiction-5-insights-from-googles-rust-journey-2022.html)
+
+***
+
+## Resources
+
 - [Leptos book](https://book.leptos.dev/)
 - [Leptos API documentation](https://docs.rs/leptos/)
 - [Official Leptos examples](https://github.com/leptos-rs/leptos/tree/main/examples)
@@ -1716,6 +1767,11 @@ https://book.leptos.dev/islands.html
     - Implement edit
     - Implement done state
 - Study [official examples](https://github.com/leptos-rs/leptos/tree/main/examples)
+- Create own app:
+    ```shell
+    cargo leptos new --git leptos-rs/start-axum
+    ```
+    <!-- .element class="very-big" style="margin-top: 0.5em; margin-bottom: 0.5em;" --->
 - ...
 
 ***
