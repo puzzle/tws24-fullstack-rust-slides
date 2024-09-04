@@ -41,12 +41,12 @@ note:
 * Memory-safe without garbage collector
 * Wide field of application thanks to unsafe code and macros
   * From embedded programming to web and desktop apps
-* No undefined behaviour unlike C/C++
+* No undefined behaviour unlike C and C++
 * Statically and strongly typed with inference
 
 ***
 
-## Rust Syntax: Variable Binding
+## Rust: Variable Binding
 
 ```rust
 let x = 42;  // defaults to i32 type
@@ -58,7 +58,7 @@ All variables must be initialized before use.
 
 ***
 
-## Rust Syntax: Scalar Types
+## Rust: Scalar Types
 
 * Signed int: `i8`, `i16`, `i32`, `i64`, `i128`, `isize` (ptr size)
 * Unsigned int: `u8`, `u16`, `u32`, `u64`, `u128` and `usize`
@@ -69,45 +69,85 @@ All variables must be initialized before use.
 
 ***
 
-## Rust Syntax: Compound Types
+## Rust: Compound Types
 
 * Arrays: fixed size, single type, e.g. `[1, 2, 3]`
 * Tuples: fixed size, multiple types, e.g.: `(1, true)`
 
 ***
 
-## Rust Syntax: Notable String Types
+## Rust: Tuples
 
-* `String`:
-  * A growable, heap-allocated string.
-  * Used when you need to own and modify string data.
-  * Can be converted from and to slices (&str).
-  * Commonly seen in data structures.
+```rust
+let pair = ('a', 17);
+pair.0; // this is 'a'
+pair.1; // this is 17
+```
+<!-- .element class="very-big" --->
+
+Or with type annotations:
+
+```rust
+let pair: (char, i32) = ('a', 17);
+pair.0; // this is 'a'
+pair.1; // this is 17
+```
+<!-- .element class="very-big" --->
 
 ***
 
-## Rust Syntax: Notable String Types
+## Rust: Destructuring Tuples
+
+```rust
+let (some_char, some_int) = ('a', 17);
+// now, `some_char` is 'a', and `some_int` is 17
+```
+<!-- .element class="very-big" --->
+
+This is especially useful when a function returns a tuple:
+
+```rust
+let (left, right) = slice.split_at(middle);
+```
+<!-- .element class="very-big" --->
+
+```rust
+let (_, right) = slice.split_at(middle);
+```
+<!-- .element class="very-big" --->
+
+The variable `_` is commonly used to throw away values.
+
+***
+
+## Rust: Notable String Types
+
+* `String`:
+  * A growable, heap-allocated string
+  * Used when you need to own and modify string data
+  * Can be converted from and to slices (&str)
+  * Commonly seen in data structures
+
+***
+
+## Rust: Notable String Types
 
 * `&str` ("stir", "String Slice"):
-  * A non-owning reference to a sequence of UTF-8 encoded string data.
-  * Used for reading string data without taking ownership.
-  * Commonly seen as function parameters.
+  * A non-owning reference to a sequence of UTF-8 encoded string data
+  * Used for reading string data without taking ownership
+  * Commonly seen as function parameters
   * String literals have type `&str`
 
 ***
 
-## Rust Syntax: Notable String Types
+## Rust: Collections
 
-```text
-  String
-    | addr | ---------> Hello World!
-    | size |                    |
-    | cap  |                    |
-                                |
-    &str                        |
-    | addr | -------------------|
-    | size |
-```
+Rust has four major categories of collections:
+
+* Sequences: Vec, VecDeque, LinkedList
+* Maps: HashMap, BTreeMap
+* Sets: HashSet, BTreeSet
+* Misc: BinaryHeap
 
 ***
 
@@ -170,7 +210,45 @@ let number3 = number;  // this works, value is copied again
 
 ***
 
-## Rust Syntax: References
+## Rust: Immutability
+
+Variable bindings are immutable by default:
+
+```rust
+let n = Number {
+    odd: true,
+    value: 17,
+};
+
+n.odd = false; // error: cannot assign to `n.odd`,
+               // as `n` is not declared to be mutable
+
+n = Number {
+    odd: false,
+    value: 22,
+}; // error: cannot assign twice to immutable variable `n`
+```
+<!-- .element class="very-big" --->
+
+***
+
+## Rust: Immutability
+
+`mut` makes a variable binding mutable:
+
+```rust
+let mut n = Number {
+    odd: true,
+    value: 17,
+};
+
+n.value = 19; // all good
+```
+<!-- .element class="very-big" --->
+
+***
+
+## Rust: References
 
 Rust has two types of references:
 
@@ -215,53 +293,7 @@ fn foo<'a, 'b>(x: &'a u32, y: &'b u32) -> &'a u32 {
 
 ***
 
-
-
-## Rust Syntax: Tuples
-
-```rust
-let pair = ('a', 17);
-pair.0; // this is 'a'
-pair.1; // this is 17
-```
-<!-- .element class="very-big" --->
-
-Or with type annotations:
-
-```rust
-let pair: (char, i32) = ('a', 17);
-pair.0; // this is 'a'
-pair.1; // this is 17
-```
-<!-- .element class="very-big" --->
-
-***
-
-## Rust Syntax: Destructuring Tuples
-
-```rust
-let (some_char, some_int) = ('a', 17);
-// now, `some_char` is 'a', and `some_int` is 17
-```
-<!-- .element class="very-big" --->
-
-This is especially useful when a function returns a tuple:
-
-```rust
-let (left, right) = slice.split_at(middle);
-```
-<!-- .element class="very-big" --->
-
-```rust
-let (_, right) = slice.split_at(middle);
-```
-<!-- .element class="very-big" --->
-
-The variable `_` is commonly used to throw away values.
-
-***
-
-## Rust Syntax: Functions
+## Rust: Functions
 
 Function that doesn't return anything:
 
@@ -270,7 +302,7 @@ fn greet() {
     println!("Hi there!");
 }
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 Function that returns an integer:
 ```rust
@@ -278,11 +310,11 @@ fn fair_dice_roll() -> i32 {
     4
 }
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 ***
 
-## Rust Syntax: Blocks
+## Rust: Blocks
 
 <!-- .slide: data-visibility="hidden" -->
 
@@ -300,14 +332,14 @@ fn fair_dice_roll() -> i32 {
 
 ***
 
-## Rust Syntax: Expressions
+## Rust: Expressions
 
 Blocks are also expressions, they evaluate to a value.
 
 ```rust
 let x = { 42 };  // x is now 42
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 ```rust
 let x = {
@@ -316,11 +348,11 @@ let x = {
     y + z // this is the *tail* - what the block will evaluate to
 };
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 ***
 
-## Rust Syntax: Expressions
+## Rust: Expressions
 
 If conditionals are also expressions:
 
@@ -333,7 +365,7 @@ fn fair_dice_roll() -> i32 {
     }
 }
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 A match is also an expression:
 
@@ -345,11 +377,11 @@ fn fair_dice_roll() -> i32 {
     }
 }
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 ***
 
-## Rust Syntax: Modules
+## Rust: Modules
 
 ```rust
 let least = std::cmp::min(3, 8); // this is 3
@@ -369,7 +401,7 @@ let least = min(7, 1); // this is 1
 
 ***
 
-## Rust Syntax: Types
+## Rust: Type Namespaces
 
 Types are namespaces too, and methods can be called as regular functions:
 
@@ -381,7 +413,7 @@ let x = str::len("amos"); // this is also 4
 
 ***
 
-## Rust Syntax: Structs
+## Rust: Structs
 
 ```rust
 struct Vec2 {
@@ -398,7 +430,7 @@ let v1 = Vec2 { x: 1.0, y: 3.0 };
 let v2 = Vec2 { y: 2.0, x: 4.0 };
 // the order does not matter, only the names do
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 ***
 
@@ -420,7 +452,7 @@ let Vec2 { x, .. } = v;
 
 ***
 
-## Rust Syntax: Pattern Matching
+## Rust: Pattern Matching
 
 ```rust
 struct Number {
@@ -446,7 +478,7 @@ fn print_number(n: Number) {
 
 ***
 
-## Rust Syntax: Methods
+## Rust: Methods
 
 You can declare methods on your own types:
 
@@ -466,46 +498,7 @@ impl Number {
 
 ***
 
-## Rust Syntax: Immutability
-
-Variable bindings are immutable by default:
-
-```rust
-let n = Number {
-    odd: true,
-    value: 17,
-};
-
-n.odd = false; // error: cannot assign to `n.odd`,
-               // as `n` is not declared to be mutable
-
-n = Number {
-    odd: false,
-    value: 22,
-}; // error: cannot assign twice to immutable variable `n`
-```
-<!-- .element class="very-big" --->
-
-
-***
-
-## Rust Syntax: Immutability
-
-`mut` makes a variable binding mutable:
-
-```rust
-let mut n = Number {
-    odd: true,
-    value: 17,
-};
-
-n.value = 19; // all good
-```
-<!-- .element class="very-big" --->
-
-***
-
-## Rust Syntax: Macros
+## Rust: Macros
 
 `name!()`, `name![]` or `name!{}` invoke a macro.
 
@@ -524,13 +517,30 @@ fn main() {
     io::stdout().lock().write_all(b"Hello there!\n").unwrap();
 }
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 ***
 
-## Rust Syntax: Enums
+## Rust: Macros
 
-Rust enums can just be constants like in other languages:
+There are also derive and other attribute like macros:
+
+```
+#[derive(PartialEq, Clone, Copy, Debug)]
+struct Point {
+    x: f64,
+    y: f64,
+}
+```
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
+
+Generates implementations for the given traits.
+
+***
+
+## Rust : Enums
+
+Rust enums can just be constants like  in other languages:
 
 ```rust
 enum Message {
@@ -542,10 +552,11 @@ enum Message {
 
 let msg = Message::Move;
 ```
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 ***
 
-## Rust Syntax: Enums
+## Rust: Enums
 
 But they can also contain data:
 
@@ -559,11 +570,11 @@ enum Message {
 
 let msg = Message::Move { x: 42, y: 0 }; 
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 ***
 
-## Rust Syntax: Option
+## Rust: Option
 
 Option is an enum to represent optional values:
 
@@ -594,9 +605,9 @@ match result {
 ```
 <!-- .element class="very-big" --->
 
-
 ***
-## Rust Syntax: Result
+
+## Rust: Result
 
 Result is an enum used for returning errors:
 ```rust
@@ -631,6 +642,7 @@ for i in (0..10).filter(|x| x % 2 == 0); {
     println!("{}", i);
 }
 ```
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 Which also supports `break` and `continue`.
 
@@ -639,7 +651,7 @@ methods for filtering and transforming.
 
 ***
 
-## Rust Syntax: Traits
+## Rust: Traits
 
 Traits are something multiple types have in common:
 
@@ -659,11 +671,11 @@ fn main() {
     println!("{}", n.is_strictly_negative()); // prints "true"
 }
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 ***
 
-## Rust Syntax: Traits
+## Rust: Traits
 
 Traits can be implemented for foreign types:
 
@@ -674,7 +686,7 @@ impl Signed for i32 {
     }
 }
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 And foreign traits for own types:
 
@@ -690,23 +702,21 @@ impl std::ops::Neg for Number {
     }
 }
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 ***
 
-## Rust Syntax: Traits
+## Rust: Traits
 
 * But foreign traits can't be implemented for foreign types
 * This is part of the orphan rules
 * The orphan rules prevent incoherence, i.e. multiple implementations of a trait for a type
-* Traits are quite different from Java interfaces: https://stackoverflow.com/questions/69477460/is-rust-trait-the-same-as-java-interface
-
-
-* impl Trait return type
+* Traits are quite different from [Java interfaces](https://stackoverflow.com/questions/69477460/is-rust-trait-the-same-as-java-interface)
+* Functions can use `impl Trait` as argument and return type
 
 ***
 
-## Rust Syntax: Closures
+## Rust: Closures
 
 ```rust
 let add_one = |x| x + 1;
@@ -720,9 +730,9 @@ println!("{}", add_one(2)); // prints 3
 
 ***
 
-## Rust Syntax: Closures
+## Rust: Closures
 
-`Fn`: For closures that don't mutate or move captured variables
+`Fn`: Implemented by closures that neither mutate nor move captured variables
 
 ```rust
 let hello = String::from("Hello");
@@ -734,9 +744,9 @@ Captures `hello` as `&String` because of `String::clone(&self) -> String`
 
 ***
 
-## Rust Syntax: Closures
+## Rust: Closures
 
-`FnMut`: For closures that mutate but don't move captured variables
+`FnMut`: Implemented by closures that don't move captured variables
 
 ```rust
 let mut hello = String::from("Hello");
@@ -748,9 +758,9 @@ Captures `hello` as `&mut String` because of `String::push_str(&mut self, string
 
 ***
 
-## Rust Syntax: Closures
+## Rust: Closures
 
-`FnOnce`: For closures that move captured variables out of their bodies
+`FnOnce`: Implemented by all closures
 
 ```rust
 let hello = String::from("Hello")
@@ -763,7 +773,7 @@ Captures `hello` as `String` and moves it out of the closure on first call becau
 
 ***
 
-## Rust Syntax: Moving Closures
+## Rust: Moving Closures
 
 To avoid lifetime issues closures can capture all variables by moving them:
 
@@ -777,7 +787,7 @@ Captures `hello` as `String` instead of `&String` because of `move`.
 
 ***
 
-## Rust Syntax: Generics
+## Rust: Generics
 
 Functions can be generic:
 
@@ -786,26 +796,24 @@ fn foobar<L, R>(left: L, right: R) {
     // do something with `left` and `right`
 }
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
-Type parameters usually have constraints, so you can actually do something with them.
+Type parameters usually have constraints, so you can actually do something with them:
 
 ```rust
 use std::fmt::Debug;
 
-fn compare<T>(left: T, right: T)
-where
-    T: Debug + PartialEq,
+fn compare<T>(left: T, right: T) where T: Debug + PartialEq,
 {
     println!("{:?} {} {:?}", left,
         if left == right { "==" } else { "!=" }, right);
 }
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 ***
 
-## Rust Syntax: Generics
+## Rust: Generics
 
 Structs can be generic too:
 
@@ -826,31 +834,37 @@ fn main() {
     print_type_name(&p2); // prints "Pair<bool>"
 }
 ```
-<!-- .element class="very-big" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 
 ***
 
-## Rust Syntax: Async
+## Rust: Async
 
-Rust supports async functions and blocks.
+Rust supports async functions and blocks:
+* They return `impl Future`
+* `await` runs a future and waits for its completion
+* Futures store the variables used in async functions/blocks
+* There are no async closures in stable Rust yet, async blocks are used instead
 
+***
+
+## Rust: Async
+
+Async function:
 ```rust
 async fn foo() -> u8 { 5 }
 ```
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
+Async block:
 ```rust
 async {
     let x: u8 = foo().await;
     x + 5
 }
 ```
-
-* They return a value that implements the `Future` trait.
-* `await` runs a future and waits for its completion.
-* Futures store the variables used in async functions/blocks
-* There are no async closures in stable Rust yet
-<!-- .element style="list-style-position: inside; padding-left: 0;" --->
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 ***
 
@@ -861,6 +875,7 @@ async {
   * Use `move` closures to capture values by move
 * Clone values which are still neeeded before move
 * Use `to_owned` to clone `&str` into `String`
+* Use `cloned` to clone elements while iterating
 
 ***
 
@@ -868,21 +883,90 @@ async {
 
 * Use shadowing to clone before moving closure:
 
-```rust
-let hello = String::from("hello");
+    ```rust
+    let hello = String::from("hello");
 
-let msg = {
-  let hello = hello.clone();
-  move || hello + " World"
-};
+    let msg = {
+        let hello = hello.clone();
+        move || hello + " World"
+    };
 
-println!("{}", hello);  // hello is still available here
-```
-
-<!-- .element class="very-big" --->
+    println!("{}", hello);  // hello is still available here
+    ```
+    <!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 * Syntactically this is a block returning a closure
 * Shadowing like this is idiomatic in rust
+
+***
+
+## Installation: Rust
+
+Install<sup>*</sup>:
+
+```sh
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+rustup toolchain install nightly
+rustup target add wasm32-unknown-unknown
+```
+
+
+<!-- <small> -->
+
+This installs stable and nightly versions of:
+
+<div class="container">
+
+<div class="col">
+<small>
+
+* rustc: The Rust compiler
+* rust-std: The Rust standard library
+* cargo: Dependency manager/build tool
+* rustdoc: Documentation generator
+
+</small>
+</div>
+
+<div class="col">
+<small>
+
+* rustfmt: Code formatter
+* clippy: Additional lints
+* wasm32: Webassembly compilation target
+
+</small>
+</div>
+
+</div>
+
+<!-- </small> -->
+
+<small><sup>*</sup>should work on Linux and macOS</small>
+
+***
+
+## Installation: Rust Analyzer
+
+* Install Rust Analyzer into your IDE:
+    * [VSCode](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+    * [IntelliJ](https://www.jetbrains.com/help/fleet/using-rust-analyzer.html)
+* Or use JetBrains [RustRover](https://www.jetbrains.com/rust/)
+
+***
+
+## Configure: Rust Analyzer
+
+* Configure Rust Analyzer to use different target dir
+* E.g. in VSCode user `settings.json`:
+
+
+    ```json
+    "rust-analyzer.cargo.extraEnv": {
+        "CARGO_TARGET_DIR": "target/check",
+    }
+    ```
+    <!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 -*-*-
 
@@ -980,53 +1064,6 @@ https://mermaid.live/edit#pako:eNqllE9P4zAQxb_KyIdVK1G4R6tKbBEqK6pFpOweCAc3nqYWy
 * Graceful degradation for clients without JS/WASM
 
 ***
-
-## Installation: Rust
-
-Install<sup>*</sup>:
-
-```sh
-curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
-rustup toolchain install nightly
-rustup target add wasm32-unknown-unknown
-```
-
-
-<!-- <small> -->
-
-This installs stable and nightly versions of:
-
-<div class="container">
-
-<div class="col">
-<small>
-
-* rustc: The Rust compiler
-* rust-std: The Rust standard library
-* cargo: Dependency manager/build tool
-* rustdoc: Documentation generator
-
-</small>
-</div>
-
-<div class="col">
-<small>
-
-* rustfmt: Code formatter
-* clippy: Additional lints
-* wasm32: Webassembly compilation target
-
-</small>
-</div>
-
-</div>
-
-<!-- </small> -->
-
-<small><sup>*</sup>should work on Linux and macOS</small>
-
-***
-
 ## Installation: Leptos
 
 - (CSR: [Manual setup](https://book.leptos.dev/getting_started/index.html) with [Trunk](https://trunkrs.dev/) and `leptos` crate.)
