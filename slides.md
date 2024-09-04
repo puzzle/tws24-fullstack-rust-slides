@@ -1601,6 +1601,7 @@ https://book.leptos.dev/islands.html
 - Error handling with `<ErrorBoundary>`
 - Testing
 - Client-side form validation
+- JavaScript interop
 - Deployment
 - ...
 
