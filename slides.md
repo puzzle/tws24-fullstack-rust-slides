@@ -992,8 +992,8 @@ This installs stable and nightly versions of:
 ## Leptos (1)
 
 * Mature Rust fullstack framework
-* Supports CSR and SSR applications
-* Client code compiled to WebAssembly
+* Supports CSR and SSR applications \
+  <small>→ Client code compiled to WebAssembly</small>
 * Server functions can be called on the client \
   <small>→ No need for REST or other API</small>
 * Fine-grained reactive, no virtual DOM \
@@ -1059,7 +1059,8 @@ https://mermaid.live/edit#pako:eNqllE9P4zAQxb_KyIdVK1G4R6tKbBEqK6pFpOweCAc3nqYWy
 
 ## Why Leptos SSR
 
-* Improved load times (First Contentful Paint)
+* Improved load times \
+  <small>→ First Contentful Paint</small>
 * Static parts can be read by search engines (SEO)
 * Graceful degradation for clients without JS/WASM
 
@@ -1719,7 +1720,7 @@ https://book.leptos.dev/islands.html
 
 ***
 
-## Credits
+## Thanks! Questions?
 
 Authors: \
 Daniel Tschan, Mathis Hofer \
