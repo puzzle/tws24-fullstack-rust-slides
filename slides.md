@@ -5,7 +5,7 @@
 <br/>
 
 ### Tech Workshop<br>5.9.2024
-### Dani Tschan<br>Mathis Hofer
+### Daniel Tschan<br>Mathis Hofer
 <!-- .element style="margin-bottom: 12rem" --->
 
 -*-*-
@@ -1439,7 +1439,7 @@ view! {
 
 ***
 
-## Leptos: Streaming Modes
+## Leptos: Async Components
 
 * `<Suspense/>`: \
   Shows children if resource ready, fallback otherwise
@@ -1450,7 +1450,7 @@ view! {
 
 ***
 
-### Suspense
+### Leptos: Suspense Component
 
 ```rust
 let (name, set_name) = create_signal("Bill".to_string());
@@ -1480,7 +1480,7 @@ view! {
 
 ***
 
-### Await
+### Leptos: Await Component
 
 ```rust
 async fn calc_ultimate_answer() -> i32 {
@@ -1504,13 +1504,58 @@ view! {
 
 ***
 
-## Leptos: Server Functions & Hydration
+## Leptos: Server Functions
 
-TODO: dani?
+* Leptos supports the concept of **server functions**
+  * Are running on the server
+  * Are async
+  * Are co-located with the component code
+  * Can be called from server or browser
+  * Always return `Result<T, ServerFnError>`
+  * Have no access to client state
 
-- Fetching Data on the Server: Making HTTP requests or database queries during SSR.
-- Server Functions
-- Hydration: How to pass data from SSR to the client for further processing.
+***
+
+## Leptos: Server Functions
+
+```rust
+#[server(AddTodo, "/api")]
+pub async fn add_todo(title: String) -> Result<(), ServerFnError> {
+    let mut conn = db().await?;
+
+    match sqlx::query(
+            "INSERT INTO todos (title, completed) VALUES ($1, false)")
+        .bind(title)
+        .execute(&mut conn)
+        .await
+    {
+        Ok(_row) => Ok(()),
+        Err(e) => Err(ServerFnError::ServerError(e.to_string())),
+    }
+}
+```
+<!-- .element class="very-big" --->
+
+Can be called on the client with spawn_local or action:
+
+```rust
+spawn_local(async {
+    add_todo("So much to do!".to_string()).await;
+});
+```
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
+
+***
+
+## Leptos: Server Function API
+
+* Server functions are called with a `POST` request
+* Arguments are URL-encoded form data
+  * Allows them to be called from HTML forms
+  * Graceful degradation when JS/WASM isn't available
+* Results are encoded with JSON 
+* Can be switched to `GET` for function for caching
+* Arguments and results must be serializable
 
 ***
 
@@ -1640,7 +1685,7 @@ https://book.leptos.dev/islands.html
 ## Credits
 
 Authors: \
-Dani Tschan, Mathis Hofer \
+Daniel Tschan, Mathis Hofer \
 Puzzle ITC
 
 Licensed under the terms of the GNU GPL-3.0 license.
