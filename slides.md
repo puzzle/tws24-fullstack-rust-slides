@@ -559,7 +559,7 @@ Generates implementations for the given traits.
 
 ## Rust : Enums
 
-Rust enums can just be constants like  in other languages:
+Rust enums can just be constants like in other languages:
 
 ```rust
 enum Message {
@@ -895,7 +895,7 @@ async {
 * Don't store references in structs and closures
   * Use owned values instead, i.e. String, not &str
   * Use `move` closures to capture values by move
-* Clone values which are still neeeded before move
+* Clone values which are still needed before move
 * Use `to_owned` to clone `&str` into `String`
 * Use `cloned` to clone elements while iterating
 
@@ -918,7 +918,7 @@ async {
     <!-- .element class="very-big" style="margin-top: 0.5em;" --->
 
 * Syntactically this is a block returning a closure
-* Shadowing like this is idiomatic in rust
+* Shadowing like this is idiomatic in Rust
 
 ***
 
@@ -1173,7 +1173,7 @@ create_effect(move |_| {
 
 ***
 
-### Rective Primitives are Copy
+### Reactive Primitives are Copy
 
 * Leptos reactive primitives are `Copy`
 * Value semantics, no lifetime issues
@@ -1746,7 +1746,7 @@ https://book.leptos.dev/islands.html
 
 ***
 
-## Resources
+## Resources: Rust
 
 - [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
 - [Rust book](https://doc.rust-lang.org/book/)
@@ -1756,7 +1756,7 @@ https://book.leptos.dev/islands.html
 
 ***
 
-## Resources
+## Resources: Leptos
 
 - [Leptos book](https://book.leptos.dev/)
 - [Leptos API documentation](https://docs.rs/leptos/)
