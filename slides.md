@@ -8,7 +8,6 @@
 ### Dani Tschan<br>Mathis Hofer
 <!-- .element style="margin-bottom: 12rem" --->
 
-
 -*-*-
 
 # Agenda
@@ -43,6 +42,7 @@ note:
 * Wide field of application thanks to unsafe code and macros
   * From embedded programming to web and desktop apps
 * No undefined behaviour unlike C/C++
+* Statically and strongly typed with inference
 
 ***
 
@@ -76,7 +76,7 @@ All variables must be initialized before use.
 
 ***
 
-## Rust Syntax: String Types
+## Rust Syntax: Notable String Types
 
 * `String`:
   * A growable, heap-allocated string.
@@ -84,17 +84,19 @@ All variables must be initialized before use.
   * Can be converted from and to slices (&str).
   * Commonly seen in data structures.
 
+***
+
+## Rust Syntax: Notable String Types
+
 * `&str` ("stir", "String Slice"):
   * A non-owning reference to a sequence of UTF-8 encoded string data.
   * Used for reading string data without taking ownership.
   * Commonly seen as function parameters.
   * String literals have type `&str`
 
-* String: Heap-allocated string, guaranteed UTF-8
-* &str: Slice of a string owned by other, guaranteed UTF-8
-  * String literals have type `&str`
-* Data structures typically own Strings and use `String`
-* Functions typically accept String references `&str`
+***
+
+## Rust Syntax: Notable String Types
 
 ```text
   String
@@ -109,10 +111,110 @@ All variables must be initialized before use.
 
 ***
 
-## Rust Syntax: Ownership and Moves
+## Rust: Type Inference
 
+* Rust types are inferred where possible
+* Function arguments must always be specified
+  * To prevent implementation from changes affecting call sites
+* Rust supports partial type inference:
+
+    ```rust
+    let values = (1 .. 10).collect::<Vec<_>>();
+    ```
+<!-- .element class="very-big" --->
 
 ***
+
+## Rust: Ownership and Moves
+
+* Each value in Rust has an owner
+* There can only be one owner at a time
+* When the owner goes out of scope, the value will be dropped
+* Ownership can be transferred between variables
+
+***
+
+## Rust: Ownership and Moves
+
+```rust
+let message = String::from("Hello");
+let message2 = message;  // Ownership of string transfered to message2
+let message3 = message;  // Error: use of moved value
+```
+<!-- .element class="very-big" --->
+
+```rust
+fn welcome(name: &str) -> String {
+    let result = format!("Hello {}", name);
+
+    result  // Transfer ownership of string to caller
+}
+
+let message = welcome("John");  // `message` now owns the string
+```
+<!-- .element class="very-big" --->
+
+***
+
+## Rust: Copy types
+
+* Values consisting of primitive types are copied on move operations
+* The corresponding types implement the `Copy` trait
+
+```rust
+let number = 42;  // 42 is of type i32, which is copy
+let number2 = number;  // value is copied, not moved
+let number3 = number;  // this works, value is copied again 
+```
+<!-- .element class="very-big" --->
+
+***
+
+## Rust Syntax: References
+
+Rust has two types of references:
+
+* &T: Immutable, shared reference
+* &mut T: Mutable, exclusive reference
+
+***
+
+## Rust: Borrowing
+
+The use of references is govenered by borrowing rules:
+
+* There can be either multiple immutable references to a value
+* Or exactly one mutable reference
+* A mutably referenced value can only be access through that reference
+* A reference cannot outlive the referenced value
+
+***
+
+## Rust: Lifetimes
+
+Every variable binding has a lifetime:
+```
+let r;
+{
+    let i = 1;
+    r = &i;
+}
+
+println!("{}", r);  // Error: `i` does not live long enough
+```
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
+
+Rust sometimes needs explicit lifetime specifiers:
+
+```rust
+fn foo<'a, 'b>(x: &'a u32, y: &'b u32) -> &'a u32 {
+    x
+}
+```
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
+
+***
+
 
 
 ## Rust Syntax: Tuples
@@ -300,7 +402,7 @@ let v2 = Vec2 { y: 2.0, x: 4.0 };
 
 ***
 
-## Rust Syntax: Destructuring Structs
+## Rust: Destructuring Structs
 
 ```rust
 let v = Vec2 { x: 3.0, y: 6.0 };
@@ -318,9 +420,29 @@ let Vec2 { x, .. } = v;
 
 ***
 
-## (Rust Syntax: Pattern Matching)
+## Rust Syntax: Pattern Matching
 
+```rust
+struct Number {
+    odd: bool,
+    value: i32,
+}
 
+fn main() {
+    let one = Number { odd: true, value: 1 };
+    let two = Number { odd: false, value: 2 };
+    print_number(one);
+    print_number(two);
+}
+
+fn print_number(n: Number) {
+    match n {
+        Number { odd: true, value } => println!("Odd number: {}", value),
+        Number { odd: false, value } => println!("Even number: {}", value),
+    }
+}
+```
+<!-- .element class="very-big" --->
 
 ***
 
@@ -440,16 +562,80 @@ let msg = Message::Move { x: 42, y: 0 };
 <!-- .element class="very-big" --->
 
 ***
+
 ## Rust Syntax: Option
+
+Option is an enum to represent optional values:
+
+```rust
+enum Option<T> {
+    None,
+    Some(T),
+}
+```
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
+
+
+```rust 
+fn divide(numerator: f64, denominator: f64) -> Option<f64> {
+    if denominator == 0.0 {
+        None
+    } else {
+        Some(numerator / denominator)
+    }
+}
+
+let result = divide(2.0, 3.0);
+
+match result {
+    Some(x) => println!("Result: {x}"),
+    None    => println!("Cannot divide by 0"),
+}
+```
+<!-- .element class="very-big" --->
+
+
 ***
 ## Rust Syntax: Result
+
+Result is an enum used for returning errors:
+```rust
+enum Result<T, E> {
+   Ok(T),
+   Err(E),
+}
+```
+<!-- .element class="very-big" style="margin-top: 0.5em;" --->
+
+```rust
+fn main() {
+    let number = env::args().nth(1).expect("Please provide a number");
+    match number.parse::<f64>() {
+        Ok(number) =>
+            println!("The square root of {} is {}", number, number.sqrt()),
+        Err(error) =>
+            println!("Can't parse '{}' as number: {}", number, error),
+    };
+}
+```
+<!-- .element class="very-big" --->
+
 ***
 
-## Rust Syntax: Error Handling
+## Rust: Loops and Iterators
 
-***
+Anything that is iterable can be used in a `for in` loop:
 
-## Rust Syntax: Iterators
+```rust
+for i in (0..10).filter(|x| x % 2 == 0); {
+    println!("{}", i);
+}
+```
+
+Which also supports `break` and `continue`.
+
+[Iterators](https://doc.rust-lang.org/std/iter/trait.Iterator.html) provide various
+methods for filtering and transforming. 
 
 ***
 
@@ -577,7 +763,17 @@ Captures `hello` as `String` and moves it out of the closure on first call becau
 
 ***
 
+## Rust Syntax: Moving Closures
 
+To avoid lifetime issues closures can capture all variables by moving them:
+
+```rust
+let mut hello = String::from("Hello");
+let mut msg = move || hello.clone() + " World";
+```
+<!-- .element class="very-big" --->
+
+Captures `hello` as `String` instead of `&String` because of `move`.
 
 ***
 
@@ -658,17 +854,35 @@ async {
 
 ***
 
-## Rust Syntax: Async
+## Beginner Borrow Checker Tips
 
-
+* Don't store references in structs and closures
+  * Use owned values instead, i.e. String, not &str
+  * Use `move` closures to capture values by move
+* Clone values which are still neeeded before move
+* Use `to_owned` to clone `&str` into `String`
 
 ***
 
-## (Rust Syntax: Lifetimes)
+## Beginner Borrow Checker Tips
 
-***
+* Use shadowing to clone before moving closure:
 
-https://fasterthanli.me/articles/a-half-hour-to-learn-rust
+```rust
+let hello = String::from("hello");
+
+let msg = {
+  let hello = hello.clone();
+  move || hello + " World"
+};
+
+println!("{}", hello);  // hello is still available here
+```
+
+<!-- .element class="very-big" --->
+
+* Syntactically this is a block returning a closure
+* Shadowing like this is idiomatic in rust
 
 -*-*-
 
