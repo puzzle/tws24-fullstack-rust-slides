@@ -1748,6 +1748,7 @@ https://book.leptos.dev/islands.html
 
 ## Resources: Rust
 
+- [The Rust Standard Library](https://doc.rust-lang.org/std/index.html)
 - [A half-hour to learn Rust](https://fasterthanli.me/articles/a-half-hour-to-learn-rust)
 - [Rust book](https://doc.rust-lang.org/book/)
 - [Rust by Example](https://doc.rust-lang.org/rust-by-example/)
